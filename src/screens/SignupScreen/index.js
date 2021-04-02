@@ -3,12 +3,15 @@ import {Text, View, Image, TouchableOpacity, TextInput} from 'react-native';
 import UserAccessHeader from '../../components/UserAccessHeader/index';
 import styles from './styles';
 
-function LoginScreen({navigation}){
+function SignupScreen({navigation}){
 
     const renderTextFields = () => {
         return(
             <View style={styles.textFieldsView}>
-            <Text style={styles.emailTextStyle}>Email</Text>
+            <Text style={styles.emailTextStyle}>Name</Text>
+            <TextInput placeholderTextColor='gray' style={styles.textFields} placeholder='Enter your name'></TextInput>
+
+            <Text style={styles.passwordTextStyle}>Email</Text>
             <TextInput placeholderTextColor='gray' style={styles.textFields} placeholder='Enter your mail'></TextInput>
 
             <Text style={styles.passwordTextStyle}>Password</Text>
@@ -17,10 +20,10 @@ function LoginScreen({navigation}){
         )
     }
 
-    const loginButton = () => {
+    const signUpButton = () => {
         return(
             <TouchableOpacity style={styles.submitLoginView}>
-                <Text style={styles.loginSubmitText}>Log in</Text>
+                <Text style={styles.loginSubmitText}>Create Account</Text>
             </TouchableOpacity>
         )
     }
@@ -28,21 +31,21 @@ function LoginScreen({navigation}){
     const disclaimerText = () => {
         return(
             <View style={styles.noAccountView}>
-          <Text style={styles.noAccountText}>Don't have an account? </Text>
-          <TouchableOpacity onPress={()=> navigation.navigate('SignupScreen')}>
-            <Text style={styles.createHereText}> Sign up</Text>
+          <Text style={styles.noAccountText}>Already have an account? </Text>
+          <TouchableOpacity onPress={()=> navigation.navigate('LoginScreen')}>
+            <Text style={styles.createHereText}> Log in</Text>
           </TouchableOpacity>
         </View>
         )
     }
     return(
         <View style={styles.mainScreenStyle}>
-        <UserAccessHeader title='Log in'/>
+        <UserAccessHeader title='Sign up'/>
         {renderTextFields()}
-        {loginButton()}
+        {signUpButton()}
         {disclaimerText()}
         </View>
     )
 }
 
-export default LoginScreen;
+export default SignupScreen;
