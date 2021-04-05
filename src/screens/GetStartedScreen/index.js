@@ -28,7 +28,7 @@ function GetStartedScreen({navigation}){
     const renderAccessButtons = () => {
         return(
             <View style={styles.mainAccessButtonsView}>
-                <TouchableOpacity style={styles.signUpButton}>
+                <TouchableOpacity onPress={()=> navigation.navigate('SignUpScreen') } style={styles.signUpButton}>
                 <Text style={styles.signUpButtonText}>Sign up</Text>
                 </TouchableOpacity>
 

@@ -1,25 +1,35 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {Text, View, Image, TouchableOpacity, TextInput} from 'react-native';
+import LottieView from 'lottie-react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import UserAccessHeader from '../../components/UserAccessHeader/index';
 import styles from './styles';
 
 function LoginScreen({navigation}){
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const renderAnimation = () => {
+        return(
+            <LottieView style={styles.animationStyle} source={require('../../assets/animation/myAnimation2.json')} autoPlay loop />
+        )
+    }
 
     const renderTextFields = () => {
         return(
             <View style={styles.textFieldsView}>
             <Text style={styles.emailTextStyle}>Email</Text>
-            <TextInput placeholderTextColor='gray' style={styles.textFields} placeholder='Enter your mail'></TextInput>
+            <TextInput onChangeText={(text) => setEmail(text)} value={email} placeholderTextColor='gray' style={email === '' ? styles.textEmptyFields : styles.textFields} placeholder='Enter your mail'></TextInput>
 
             <Text style={styles.passwordTextStyle}>Password</Text>
-            <TextInput secureTextEntry={true} placeholderTextColor='gray' style={styles.textFields} placeholder='Enter your password'></TextInput>
+            <TextInput onChangeText={(text)=> setPassword(text)} value={password} secureTextEntry={true} placeholderTextColor='gray' style={password === '' ? styles.textEmptyFields : styles.textFields} placeholder='Enter your password'></TextInput>
             </View>
         )
     }
 
     const loginButton = () => {
         return(
-            <TouchableOpacity style={styles.submitLoginView}>
+            <TouchableOpacity onPress={() => navigation.navigate('MyTab')} style={styles.submitLoginView}>
                 <Text style={styles.loginSubmitText}>Log in</Text>
             </TouchableOpacity>
         )
@@ -27,9 +37,9 @@ function LoginScreen({navigation}){
 
     const disclaimerText = () => {
         return(
-            <View style={styles.noAccountView}>
+        <View style={styles.noAccountView}>
           <Text style={styles.noAccountText}>Don't have an account? </Text>
-          <TouchableOpacity onPress={()=> navigation.navigate('SignupScreen')}>
+          <TouchableOpacity onPress={()=> navigation.navigate('SignUpScreen')}>
             <Text style={styles.createHereText}> Sign up</Text>
           </TouchableOpacity>
         </View>
@@ -38,9 +48,12 @@ function LoginScreen({navigation}){
     return(
         <View style={styles.mainScreenStyle}>
         <UserAccessHeader title='Log in'/>
+        {renderAnimation()}
+        <KeyboardAwareScrollView>
         {renderTextFields()}
         {loginButton()}
         {disclaimerText()}
+        </KeyboardAwareScrollView>
         </View>
     )
 }

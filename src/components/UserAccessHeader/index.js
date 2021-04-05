@@ -1,11 +1,14 @@
 import React from 'react';
 import {Text, View, Image, TouchableOpacity} from 'react-native';
 import styles from './styles';
+import {useNavigation} from '@react-navigation/native';
 
 function UserAccessHeader(props) {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.headerView}>
-      <TouchableOpacity style={styles.headerIconView}>
+      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerIconView}>
         <Image
           style={styles.iconStyle}
           source={require('../../assets/images/back.png')}

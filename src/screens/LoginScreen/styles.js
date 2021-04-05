@@ -23,13 +23,21 @@ export default StyleSheet.create({
   },
 
   textFieldsView:{
-      paddingTop: 5 * vh,
   },
 
   textFields: 
     {
         borderRadius: 3 * vw,
         borderColor: '#fb4444',
+        borderWidth: 2,
+        paddingLeft: 3 * vw,
+        color:'white'
+    },
+
+    textEmptyFields: 
+    {
+        borderRadius: 3 * vw,
+        borderColor: '#222222',
         borderWidth: 2,
         paddingLeft: 3 * vw,
         color:'white'
@@ -59,6 +67,10 @@ export default StyleSheet.create({
 
       createHereText: {
         color: '#fff',
+      },
+
+      animationStyle: {
+        height: 25 * vh, alignSelf: 'center'
       },
 
 

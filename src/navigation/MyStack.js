@@ -2,9 +2,12 @@ import * as React from 'react';
 import 'react-native-gesture-handler';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import GetStartedScreen from '../screens/GetStartedScreen/index';
-import LoginScreen from '../screens/LoginScreen/index';
-import SignupScreen from '../screens/SignupScreen/index';
+import StartScreen from '../screens/StartScreen/index';
+import HomeScreen from '../screens/HomeScreen/index';
+import NotificationScreen from '../screens/NotificationScreen/index';
+import HeaderComponent from '../components/HeaderComponent/index';
+
+import MyTab from '../navigation/MyTab';
 
 function MyStack() {
   const Stack = createStackNavigator();
@@ -12,20 +15,33 @@ function MyStack() {
     <Stack.Navigator>
       <Stack.Screen
         options={{headerShown: false}}
-        name="SignupScreen"
-        component={SignupScreen}
+        name="StartScreen"
+        component={StartScreen}
       />
-      <Stack.Screen
+     
+     <Stack.Screen
         options={{headerShown: false}}
-        name="LoginScreen"
-        component={LoginScreen}
-      />
-      <Stack.Screen
-        options={{headerShown: false}}
-        name="GetStartedScreen"
-        component={GetStartedScreen}
+        name="MyTab"
+        component={MyTab}
       />
 
+      {/* <Stack.Screen
+        options={{headerShown: false}}
+        name="HomeScreen"
+        component={HomeScreen}
+      /> */}
+
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="NotificationScreen"
+        component={NotificationScreen}
+      />
+
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="HeaderComponent"
+        component={HeaderComponent}
+      />
     </Stack.Navigator>
   );
 }
