@@ -7,15 +7,16 @@ import styles from './styles';
 function NotificationScreen({navigation}){
     const renderNotification = () => {
         return(
-           <View style={styles.notificationMainView}>
-               <View>
-               <Image resizeMode='contain' style={styles.notificationIconStyle} source={require('../../assets/images/tick.png')}/>
+           <TouchableOpacity style={styles.notificationMainView}>
+               <View style={styles.notificationBlueBar}>
+               <Image resizeMode='contain' style={styles.notificationIconStyle} source={require('../../assets/images/message.png')}/>
                </View>
 
                <View style={styles.notificationHeadingView}>
-                   <Text style={styles.notificationHeadingText}>A successful toast</Text>
+                   <Text style={styles.notificationHeadingText}>Did you know?</Text>
+                   <Text style={styles.notificationSubHeadingText}>Here is something that you need to know</Text>
                </View>
-           </View>
+           </TouchableOpacity>
         )
     }
     return(

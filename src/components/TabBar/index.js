@@ -10,7 +10,7 @@ const TabBar = ({state, navigation}) => {
   const {routes} = state;
   const [selected, setSelected] = useState('HomeScreen');
   const renderColor = (currentTab) =>
-    currentTab === selected ? '#fb4444' : 'transparent';
+    currentTab === selected ? 'transparent' : 'transparent';
 
   const renderText = (currentTab) => {
     currentTab === selected ? 'HomeScreen' : '';

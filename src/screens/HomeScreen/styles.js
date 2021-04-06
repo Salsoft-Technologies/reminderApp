@@ -47,14 +47,41 @@ export default StyleSheet.create({
 
   listElementView:{
     padding: 2.5 * vh,
-    width: 60 * vw,
     borderRadius: 5 * vw,
-    marginBottom: 2 * vh
+  },
+
+  elementView: {
+    padding: 0.5 * vh,
+    paddingHorizontal: 2 * vw,
+    width: 70 * vw,
+    paddingTop: 1 * vh,
   },
 
   listElementStyle:{
     color: '#fff',
-    alignSelf: 'center'
+  },
+
+  timeStyle:{
+    color: 'darkgray',
+    fontSize: 1.8 * vh,
+    paddingTop: 0.5 * vh,
+    fontWeight: 'bold'
+
+  },
+
+  footerButton: {
+    position: 'absolute', 
+    bottom: 1,
+    paddingBottom: 3 * vh,
+    paddingLeft: 48 * vh,
+
+
+  },
+
+  buttonStyle:{
+    paddingVertical: 3 * vh,
+    paddingHorizontal: 5 * vw,
+    borderRadius: 10 * vw
   }
 
 });

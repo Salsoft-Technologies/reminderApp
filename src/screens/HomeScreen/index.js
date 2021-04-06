@@ -1,10 +1,66 @@
-import React from 'react';
-import {Text, View, StatusBar, TouchableOpacity, Image} from 'react-native';
+import React, {useState} from 'react';
+import {Text, View, StatusBar, FlatList, TouchableOpacity, Image} from 'react-native';
 import HeaderComponent from '../../components/HeaderComponent/index';
 import LinearGradient from 'react-native-linear-gradient';
+import vw from '../../utils/units/vw';
+import vh from '../../utils/units/vh';
+import {BoxShadow} from 'react-native-shadow'
 import styles from './styles';
 
 function HomeScreen() {
+  const [data, setData] = useState([
+    {
+      id: 1,
+      taskDescription: 'Design mobile app to-do list',
+      from: '10 pm',
+      to: '3 pm'
+    },
+    {
+      id: 2,
+      taskDescription: 'Design mobile app to-do list',
+      from: '10 pm',
+      to: '3 pm'
+    },
+
+    {
+      id: 3,
+      taskDescription: 'Design mobile app to-do list',
+      from: '10 pm',
+      to: '3 pm'
+    },
+
+    {
+      id: 4,
+      taskDescription: 'Design mobile app to-do list',
+      from: '10 pm',
+      to: '3 pm'
+    },
+
+    {
+      id: 5,
+      taskDescription: 'Design mobile app to-do list',
+      from: '10 pm',
+      to: '3 pm'
+    },
+    {
+      id: 6,
+      taskDescription: 'Design mobile app to-do list',
+      from: '10 pm',
+      to: '3 pm'
+    },
+    {
+      id: 7,
+      taskDescription: 'Design mobile app to-do list',
+      from: '10 pm',
+      to: '3 pm'
+    },
+    {
+      id: 8,
+      taskDescription: 'Design mobile app to-do list',
+      from: '10 pm',
+      to: '3 pm'
+    },
+  ])
   const renderHomeHeader = () => {
     return (
       <View style={styles.homeHeaderStyleView}>
@@ -23,55 +79,63 @@ function HomeScreen() {
   const renderTaskListHeading = () => {
     return (
       <View style={styles.todaysTaskView}>
-        <Text style={styles.todaysTaskStyle}>Today's Task</Text>
+        <Text style={styles.todaysTaskStyle}>Your Tasks</Text>
       </View>
     );
   };
 
-  const renderTaskList = () => {
+  const renderTaskList = ({item}) => {
+    const shadowOpt = {
+      width:280,
+      height:80,
+      color:"#fb3f56",
+      border:0,
+      radius:10,
+      opacity:0.06,
+      x:3,
+      y:3,
+      style:{marginVertical:2}
+    }
     return (
-      <View>
-        <View style={styles.listElementView}>
+      <BoxShadow setting={shadowOpt}>
+        <TouchableOpacity style={styles.elementView}>
           <LinearGradient
-            colors={['#d3655f', '#cc342c', '#fb4444']}
+            colors={['#fb4444', '#fb4444', '#cc342c']}
 
             style={styles.listElementView}>
             <Text style={styles.listElementStyle}>
-              Design mobile app to-do list
+              {item.taskDescription}
+            </Text>
+
+            <Text style={styles.timeStyle}>
+             {item.from} - {item.to}
             </Text>
           </LinearGradient>
-
-          <LinearGradient
-            colors={['#d3655f', '#cc342c', '#fb4444']}
-
-            style={styles.listElementView}>
-            <Text style={styles.listElementStyle}>
-              Design mobile app to-do list
-            </Text>
-          </LinearGradient>
-          
-        </View>
-      </View>
+        </TouchableOpacity>
+        </BoxShadow>
     );
   };
 
-  const renderFooterButton = () => {
+  const _renderList = () => {
     return(
-      <TouchableOpacity style={{backgroundColor: 'red', position: 'absolute'}}>
-        <Image source={require('../../assets/images/plus.png')}/>
-      </TouchableOpacity>
+      <FlatList
+      style={{}}
+        data={data}
+        renderItem={renderTaskList}
+        keyExtractor={(item, index) => index.toString()}
+      />
     )
   }
 
+
   return (
-    <View>
+    <>
       <HeaderComponent />
       <StatusBar backgroundColor="#fb4444" />
       {renderHomeHeader()}
       {renderTaskListHeading()}
-      {renderTaskList()}
-      {renderFooterButton()}
-    </View>
+      {_renderList()}
+    </>
   );
 }
 
