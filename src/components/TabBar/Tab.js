@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, StyleSheet, Text, Image, TouchableOpacity} from 'react-native';
 import vw from '../../utils/units/vw';
 import vh from '../../utils/units/vh';
@@ -13,26 +13,19 @@ const Tab = ({tab, icon, onPress, color, selected, text}) => {
             style={styles.navIconSize}
             source={require('../../assets/images/cube.png')}
           />
-        ) : tab.name === 'Task' ? (
-          <TouchableOpacity style={styles.tabPlusButton}>
-            <LinearGradient
-              colors={['#8e2de2', '#4a00e0', '#8066dc']}
-              style={styles.buttonStyle}>
-              <Image resizeMode = 'contain'
-                source={require('../../assets/images/plus.png')}
-              />
-            </LinearGradient>
-          </TouchableOpacity>
-        ) : (
+        )  : (
           <Image
             style={styles.navIconSize}
             source={require('../../assets/images/profile.png')}
           />
         )}
       </TouchableOpacity>
+
+     
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   mainView: {
@@ -75,3 +68,31 @@ const styles = StyleSheet.create({
 });
 
 export default Tab;
+
+
+// : tab.name === 'Task' ? (
+//   <TouchableOpacity onPress={toggleModal} style={styles.tabPlusButton}>
+//     <LinearGradient
+//       colors={['#8e2de2', '#4a00e0', '#8066dc']}
+//       style={styles.buttonStyle}>
+//       <Image resizeMode = 'contain'
+//         source={require('../../assets/images/plus.png')}
+//       />
+//     </LinearGradient>
+//   </TouchableOpacity>
+// )
+
+{/* <Modal isVisible={isModalVisible}>
+<View style={{flex: 1}}>
+  <Text>Hello!</Text>
+  <TouchableOpacity onPress={toggleModal}>  
+  <Text>Close</Text>
+  </TouchableOpacity>
+</View>
+</Modal> */}
+
+ 
+// const [isModalVisible, setModalVisible] = useState(false);
+// const toggleModal = () => {
+//   setModalVisible(!isModalVisible);
+// };

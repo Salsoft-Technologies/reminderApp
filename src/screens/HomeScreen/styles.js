@@ -82,6 +82,19 @@ export default StyleSheet.create({
     paddingVertical: 3 * vh,
     paddingHorizontal: 5 * vw,
     borderRadius: 10 * vw
-  }
+  },
+
+  tabPlusButton: {
+    position: 'absolute',
+    bottom: 2 * vh,
+    paddingLeft: 50 * vh
+  },
+
+  buttonStyle: {
+    paddingVertical: 2.4 * vh,
+    paddingHorizontal: 4 * vw,
+    borderRadius: 10 * vw,
+
+  },
 
 });

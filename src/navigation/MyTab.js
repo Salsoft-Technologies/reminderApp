@@ -14,7 +14,6 @@ export default function MyTab() {
   return (
     <Tab.Navigator tabBar={(props) => <TabBar {...props} />}>
       <Tab.Screen name="HomeScreen" component={HomeScreen} />
-      <Tab.Screen name="Task" component={ProfileScreen} />
       <Tab.Screen name="ProfileScreen" component={ProfileScreen} />
     </Tab.Navigator>
   );

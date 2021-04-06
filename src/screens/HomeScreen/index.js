@@ -11,8 +11,14 @@ import HeaderComponent from '../../components/HeaderComponent/index';
 import LinearGradient from 'react-native-linear-gradient';
 import {BoxShadow} from 'react-native-shadow';
 import styles from './styles';
+import Modal from 'react-native-modal';
 
 function HomeScreen() {
+  const [isModalVisible, setModalVisible] = useState(false);
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
   const [data, setData] = useState([
     {
       id: 1,
@@ -147,6 +153,34 @@ function HomeScreen() {
     );
   };
 
+  const renderButton = () => {
+    return (
+      <TouchableOpacity onPress={toggleModal} style={styles.tabPlusButton}>
+        <LinearGradient
+          colors={['#8e2de2', '#4a00e0', '#8066dc']}
+          style={styles.buttonStyle}>
+          <Image
+            resizeMode="contain"
+            source={require('../../assets/images/plus.png')}
+          />
+        </LinearGradient>
+      </TouchableOpacity>
+    );
+  };
+
+  const renderModalMessage = () => {
+    return (
+      <Modal isVisible={isModalVisible}>
+        <View style={{flex: 1}}>
+          <Text>Hello!</Text>
+          <TouchableOpacity onPress={toggleModal}>
+            <Text>Close</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
+    );
+  };
+  
   return (
     <>
       <HeaderComponent />
@@ -154,6 +188,8 @@ function HomeScreen() {
       {renderHomeHeader()}
       {renderTaskListHeading()}
       {_renderList()}
+      {renderButton()}
+      {renderModalMessage()}
     </>
   );
 }
