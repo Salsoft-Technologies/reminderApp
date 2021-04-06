@@ -6,12 +6,13 @@ import GetStartedScreen from '../screens/GetStartedScreen/index';
 import LoginScreen from '../screens/LoginScreen/index';
 import SignUpScreen from '../screens/SignupScreen/index';
 import MyStack from '../navigation/MyStack';
+import MyDrawer from '../navigation/MyDrawer';
 
 function Credentials() {
   const Stack = createStackNavigator();
   return (
     <Stack.Navigator>
-    <Stack.Screen
+      <Stack.Screen
         options={{headerShown: false}}
         name="GetStartedScreen"
         component={GetStartedScreen}
@@ -21,6 +22,7 @@ function Credentials() {
         name="LoginScreen"
         component={LoginScreen}
       />
+
       <Stack.Screen
         options={{headerShown: false}}
         name="SignUpScreen"

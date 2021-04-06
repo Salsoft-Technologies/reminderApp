@@ -3,7 +3,7 @@ import 'react-native-gesture-handler';
 import {createStackNavigator} from '@react-navigation/stack';
 import StartScreen from '../screens/StartScreen/index';
 import NotificationScreen from '../screens/NotificationScreen/index';
-import MyTab from '../navigation/MyTab';
+import MyTab from './MyTab';
 
 function MyStack() {
   const Stack = createStackNavigator();

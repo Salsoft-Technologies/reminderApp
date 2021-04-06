@@ -29,7 +29,7 @@ function LoginScreen({navigation}){
 
     const loginButton = () => {
         return(
-            <TouchableOpacity onPress={() => navigation.navigate('MyTab')} style={styles.submitLoginView}>
+            <TouchableOpacity onPress={() => navigation.navigate('MyStack')} style={styles.submitLoginView}>
                 <Text style={styles.loginSubmitText}>Log in</Text>
             </TouchableOpacity>
         )

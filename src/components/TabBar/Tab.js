@@ -19,7 +19,6 @@ const Tab = ({tab, icon, onPress, color, selected, text}) => {
               colors={['#8e2de2', '#4a00e0', '#8066dc']}
               style={styles.buttonStyle}>
               <Image resizeMode = 'contain'
-                style={{}}
                 source={require('../../assets/images/plus.png')}
               />
             </LinearGradient>
@@ -71,6 +70,7 @@ const styles = StyleSheet.create({
     paddingVertical: 2.4 * vh,
     paddingHorizontal: 4 * vw,
     borderRadius: 10 * vw,
+
   },
 });
 
