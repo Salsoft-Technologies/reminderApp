@@ -5,6 +5,7 @@ import {
   StatusBar,
   FlatList,
   TouchableOpacity,
+  TextInput,
   Image,
 } from 'react-native';
 import HeaderComponent from '../../components/HeaderComponent/index';
@@ -170,11 +171,11 @@ function HomeScreen() {
 
   const renderModalMessage = () => {
     return (
-      <Modal isVisible={isModalVisible}>
-        <View style={{flex: 1}}>
-          <Text>Hello!</Text>
-          <TouchableOpacity onPress={toggleModal}>
-            <Text>Close</Text>
+      <Modal isVisible={isModalVisible} onBackdropPress={toggleModal} backdropColor='black'>
+        <View style={styles.modalViewStyle}>
+          <TextInput multiline={true} style={styles.modalInputStyle} placeholder='Type your task' placeholderTextColor='gray'></TextInput>
+          <TouchableOpacity style={styles.modalSubmitButton} onPress={toggleModal}>
+            <Text style={styles.modalSubmitTextStyle}>Submit</Text>
           </TouchableOpacity>
         </View>
       </Modal>

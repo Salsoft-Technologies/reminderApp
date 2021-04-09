@@ -1,6 +1,7 @@
 import {StyleSheet} from 'react-native';
 import vw from '../../utils/units/vw';
 import vh from '../../utils/units/vh';
+import { NativeViewGestureHandler } from 'react-native-gesture-handler';
 
 export default StyleSheet.create({
   homeHeaderStyleView: {
@@ -21,7 +22,7 @@ export default StyleSheet.create({
   },
 
   monthTextStyle: {
-    color: '#fff'
+    color: '#fff',
   },
 
   monthTextView: {
@@ -31,21 +32,21 @@ export default StyleSheet.create({
     marginVertical: 2 * vh,
     borderRadius: 2 * vh,
     paddingHorizontal: 2 * vw,
-    backgroundColor: '#aaaaaa'
+    backgroundColor: '#aaaaaa',
   },
 
   todaysTaskView: {
     paddingHorizontal: 4 * vw,
-    paddingTop: 2 * vh
+    paddingTop: 2 * vh,
   },
 
   todaysTaskStyle: {
-      fontSize: 2.5 * vh,
-      fontWeight: 'bold',
-      letterSpacing: 0.2 * vw
+    fontSize: 2.5 * vh,
+    fontWeight: 'bold',
+    letterSpacing: 0.2 * vw,
   },
 
-  listElementView:{
+  listElementView: {
     padding: 2.5 * vh,
     borderRadius: 5 * vw,
   },
@@ -57,44 +58,70 @@ export default StyleSheet.create({
     paddingTop: 1 * vh,
   },
 
-  listElementStyle:{
+  listElementStyle: {
     color: '#fff',
   },
 
-  timeStyle:{
+  timeStyle: {
     color: 'darkgray',
     fontSize: 1.8 * vh,
     paddingTop: 0.5 * vh,
-    fontWeight: 'bold'
-
+    fontWeight: 'bold',
   },
 
   footerButton: {
-    position: 'absolute', 
+    position: 'absolute',
     bottom: 1,
     paddingBottom: 3 * vh,
     paddingLeft: 48 * vh,
-
-
   },
 
-  buttonStyle:{
+  buttonStyle: {
     paddingVertical: 3 * vh,
     paddingHorizontal: 5 * vw,
-    borderRadius: 10 * vw
+    borderRadius: 10 * vw,
   },
 
   tabPlusButton: {
     position: 'absolute',
     bottom: 2 * vh,
-    paddingLeft: 50 * vh
+    paddingLeft: 50 * vh,
   },
 
   buttonStyle: {
     paddingVertical: 2.4 * vh,
     paddingHorizontal: 4 * vw,
     borderRadius: 10 * vw,
-
   },
 
+  modalViewStyle: {
+    justifyContent: 'center',
+    padding: 4 * vh,
+    backgroundColor: 'white',
+    opacity: 0.8,
+    borderRadius: 5 * vw,
+    paddingBottom: 2 * vh
+  },
+
+  modalInputStyle: {
+    color: 'black',
+    backgroundColor: '#fdce84',
+    marginHorizontal: 5 * vw,
+    borderRadius: 2 * vw,
+    paddingHorizontal: 3 * vw
+  },
+
+  modalSubmitButton: {
+    backgroundColor: '#fb4444',
+    padding: 2 * vh,
+    margin: 2 * vh,
+    marginHorizontal: 20 * vw,
+    borderRadius: 3 * vw,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+
+  modalSubmitTextStyle: {
+    color: '#fff'
+  }
 });
