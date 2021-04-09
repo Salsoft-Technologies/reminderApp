@@ -25,9 +25,9 @@ function HomeScreen() {
   const {user} = useContext(AuthContext);
   const [task, setTask] = useState();
   const [taskItems, setTaskItems] = useState([]);
-  const retrievedUser = user.uid;
+    const retrievedUser = user.uid;
 
-  const gettingData = () => {
+const gettingData = () => {
   const theDetails = firebaseobj.database().ref('Details');
   theDetails.on('value', datasnap => {
       const newDetails = datasnap.val()
@@ -57,6 +57,9 @@ useEffect(()=>{
     let itemsCopy = [...taskItems];
     itemsCopy.splice(index, 1);
     setTaskItems(itemsCopy);
+    firebaseobj.database()
+    .ref(index)
+    .remove();
   };
 
   const username = user.email.split('@')[0];
@@ -169,7 +172,7 @@ useEffect(()=>{
     const time =
       today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
     return (
-      <ScrollView>
+      <>
         {taskItems.map((item, index) => (
             <BoxShadow key={index} setting={shadowOpt}>
               <TouchableOpacity
@@ -187,33 +190,20 @@ useEffect(()=>{
               </TouchableOpacity>
             </BoxShadow>
         ))}
-      </ScrollView>
+      </>
     );
   };
 
-//   const renderAllHistory = ()=>{
-//     return(
-//         <>
-//             {historyData.map((data, index) => (
-//                 <View key={index} style={styles.historyMainView}>
-//                 <Image style={styles.historyCoinsImage} source={require('../../assets/images/quizIcons/victoryCoins.png')}/>
-//                 <View style={styles.historyCoinsView}>
-//                 <Text style={styles.historyTotalCoinsText}>{data.userEmail}</Text>
-//                 <Text style={styles.historyTotalCoins}><Text style={styles.historyScoredCoins}>{data.userScore}</Text> out of 5</Text>
-//                 <Text style={styles.historyTotalCoins}>{data.playedDate}</Text>
-//                 </View>
-//                 </View>
-//             ))}
-//         </>
-//     )
-// }
   return (
     <>
       <HeaderComponent />
       <StatusBar backgroundColor="#fb4444" />
       {renderHomeHeader()}
       {renderTaskListHeading()}
-      {renderList()}
+      {/* {renderList()} */}
+      {
+        taskItems != '' ? <ScrollView>{renderList()}</ScrollView> : <View style={styles.noTasksView}><Text style={styles.noTasksTextStyle}>No tasks assigned</Text></View>
+      }
       {renderButton()}
       {renderModalMessage()}
     </>

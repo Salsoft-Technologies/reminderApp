@@ -122,5 +122,15 @@ export default StyleSheet.create({
 
   modalSubmitTextStyle: {
     color: '#fff'
+  },
+
+  noTasksView: {
+    backgroundColor: '#fdce84',
+    padding: 4 * vh,
+    margin: 2 * vh,
+    borderRadius: 3 * vh
+  },
+
+  noTasksTextStyle: {
   }
 });
