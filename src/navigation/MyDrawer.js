@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   Text,
   View,
@@ -14,8 +14,11 @@ import LottieView from 'lottie-react-native';
 import vw from '../utils/units/vw';
 import vh from '../utils/units/vh';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {AuthContext} from '../navigation/AuthProvider';
 
 function MyDrawer({navigation}) {
+  const {logout, user} =useContext(AuthContext);
+
   const CustomDrawerComponent = (props) => (
     <SafeAreaView style={styles.mainDrawerView}>
       <View style={styles.drawerView}>
@@ -27,7 +30,7 @@ function MyDrawer({navigation}) {
         />
 
         <View style={styles.nameContainer}>
-          <Text style={styles.nameStyle}>Kevin Peterson</Text>
+          <Text style={styles.nameStyle}>{user.email}</Text>
           <Text style={styles.nameLocationStyle}>LA, USA</Text>
         </View>
 
@@ -56,9 +59,9 @@ function MyDrawer({navigation}) {
                 />
               </View>
 
-              <View style={styles.drawerTextView}>
+              <TouchableOpacity onPress={() => logout()} style={styles.drawerTextView}>
                 <Text style={styles.drawerTextStyle}>Logout</Text>
-              </View>
+              </TouchableOpacity>
             </TouchableOpacity>
             {/* <DrawerItems {...props}/> */}
           </ScrollView>

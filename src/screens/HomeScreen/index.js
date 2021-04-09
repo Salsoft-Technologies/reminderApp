@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {
   Text,
   View,
@@ -13,8 +13,13 @@ import LinearGradient from 'react-native-linear-gradient';
 import {BoxShadow} from 'react-native-shadow';
 import styles from './styles';
 import Modal from 'react-native-modal';
+import {AuthContext} from '../../navigation/AuthProvider';
 
 function HomeScreen() {
+  const {user} = useContext(AuthContext);
+  const username = user.email.split('@')[0];
+  const updatedUserName = username.charAt(0).toUpperCase() + username.slice(1);
+
   const [isModalVisible, setModalVisible] = useState(false);
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -96,7 +101,7 @@ function HomeScreen() {
     return (
       <View style={styles.homeHeaderStyleView}>
         <View>
-          <Text style={styles.nameStyle}>Hey Kevin!</Text>
+          <Text style={styles.nameStyle}>Hey {updatedUserName}!</Text>
           <Text style={styles.dateStyle}>{todaysDate}</Text>
         </View>
 

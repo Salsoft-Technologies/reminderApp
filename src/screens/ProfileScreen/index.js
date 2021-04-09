@@ -1,11 +1,16 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Share, Text, View} from 'react-native';
 import UserAccessHeader from '../../components/UserAccessHeader/index';
 import LottieView from 'lottie-react-native';
 import styles from './styles';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {AuthContext} from '../../navigation/AuthProvider';
 
 function ProfileScreen() {
+  const {user} = useContext(AuthContext);
+  const username = user.email.split('@')[0];
+  const updatedUserName = username.charAt(0).toUpperCase() + username.slice(1);
+
   const renderRotateView = () => {
     return <View style={styles.rotateView}></View>;
   };
@@ -46,13 +51,13 @@ function ProfileScreen() {
     return (
       <View style={styles.otherDetailsMainView}>
         <View style={styles.otherDetailsStyleView}>
-          <Text style={styles.valueHeadingStyle}>Name</Text>
-          <Text style={styles.valueStyle}>Kevin</Text>
+          <Text style={styles.valueHeadingStyle}>Username</Text>
+          <Text style={styles.valueStyle}>{updatedUserName}</Text>
         </View>
 
         <View style={styles.otherDetailsStyleView}>
           <Text style={styles.valueHeadingStyle}>Email</Text>
-          <Text style={styles.valueStyle}>kevin@gmail.com</Text>
+          <Text style={styles.valueStyle}>{user.email}</Text>
         </View>
 
         <View style={styles.otherDetailsStyleView}>

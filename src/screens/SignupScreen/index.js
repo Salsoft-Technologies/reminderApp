@@ -1,11 +1,13 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {Text, View, Image, TouchableOpacity, TextInput} from 'react-native';
 import LottieView from 'lottie-react-native';
 import UserAccessHeader from '../../components/UserAccessHeader/index';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
+import {AuthContext} from '../../navigation/AuthProvider';
 
 function SignupScreen({navigation}) {
+  const {register, user} = useContext(AuthContext)
   const [name, SetName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -48,7 +50,7 @@ function SignupScreen({navigation}) {
 
   const signUpButton = () => {
     return (
-      <TouchableOpacity style={styles.submitLoginView}>
+      <TouchableOpacity onPress={() => register(email, password, name)} style={styles.submitLoginView}>
         <Text style={styles.loginSubmitText}>Create Account</Text>
       </TouchableOpacity>
     );

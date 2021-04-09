@@ -106,7 +106,6 @@ export default StyleSheet.create({
   modalInputStyle: {
     color: 'black',
     backgroundColor: '#fdce84',
-    marginHorizontal: 5 * vw,
     borderRadius: 2 * vw,
     paddingHorizontal: 3 * vw
   },

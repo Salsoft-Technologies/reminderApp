@@ -1,13 +1,15 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {Text, View, Image, TouchableOpacity, TextInput} from 'react-native';
 import LottieView from 'lottie-react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {AuthContext} from '../../navigation/AuthProvider';
 import UserAccessHeader from '../../components/UserAccessHeader/index';
 import styles from './styles';
 
 function LoginScreen({navigation}){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const {login, user} = useContext(AuthContext);
 
     const renderAnimation = () => {
         return(
@@ -29,7 +31,7 @@ function LoginScreen({navigation}){
 
     const loginButton = () => {
         return(
-            <TouchableOpacity onPress={() => navigation.navigate('MyStack')} style={styles.submitLoginView}>
+            <TouchableOpacity onPress={() => login(email, password)} style={styles.submitLoginView}>
                 <Text style={styles.loginSubmitText}>Log in</Text>
             </TouchableOpacity>
         )
