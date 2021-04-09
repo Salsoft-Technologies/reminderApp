@@ -63,7 +63,7 @@ export default StyleSheet.create({
   },
 
   timeStyle: {
-    color: 'darkgray',
+    color: 'lightgray',
     fontSize: 1.8 * vh,
     paddingTop: 0.5 * vh,
     fontWeight: 'bold',

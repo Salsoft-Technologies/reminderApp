@@ -3,7 +3,7 @@ import {
   Text,
   View,
   StatusBar,
-  FlatList,
+  ScrollView,
   TouchableOpacity,
   TextInput,
   Image,
@@ -17,6 +17,19 @@ import {AuthContext} from '../../navigation/AuthProvider';
 
 function HomeScreen() {
   const {user} = useContext(AuthContext);
+  const [task, setTask] = useState();
+  const [taskItems, setTaskItems] = useState([]);
+  const handleTask = () => {
+    setTaskItems([...taskItems, task]);
+    setTask(null);
+    setModalVisible(!isModalVisible);
+  };
+
+  const completeTask = (index) => {
+    let itemsCopy = [...taskItems];
+    itemsCopy.splice(index, 1);
+    setTaskItems(itemsCopy);
+  };
   const username = user.email.split('@')[0];
   const updatedUserName = username.charAt(0).toUpperCase() + username.slice(1);
 
@@ -25,59 +38,6 @@ function HomeScreen() {
     setModalVisible(!isModalVisible);
   };
 
-  const [data, setData] = useState([
-    {
-      id: 1,
-      taskDescription: 'Design mobile app to-do list',
-      from: '10 pm',
-      to: '3 pm',
-    },
-    {
-      id: 2,
-      taskDescription: 'Design mobile app to-do list',
-      from: '10 pm',
-      to: '3 pm',
-    },
-
-    {
-      id: 3,
-      taskDescription: 'Design mobile app to-do list',
-      from: '10 pm',
-      to: '3 pm',
-    },
-
-    {
-      id: 4,
-      taskDescription: 'Design mobile app to-do list',
-      from: '10 pm',
-      to: '3 pm',
-    },
-
-    {
-      id: 5,
-      taskDescription: 'Design mobile app to-do list',
-      from: '10 pm',
-      to: '3 pm',
-    },
-    {
-      id: 6,
-      taskDescription: 'Design mobile app to-do list',
-      from: '10 pm',
-      to: '3 pm',
-    },
-    {
-      id: 7,
-      taskDescription: 'Design mobile app to-do list',
-      from: '10 pm',
-      to: '3 pm',
-    },
-    {
-      id: 8,
-      taskDescription: 'Design mobile app to-do list',
-      from: '10 pm',
-      to: '3 pm',
-    },
-  ]);
   const renderHomeHeader = () => {
     const months = [
       'January',
@@ -120,45 +80,6 @@ function HomeScreen() {
     );
   };
 
-  const renderTaskList = ({item}) => {
-    const shadowOpt = {
-      width: 280,
-      height: 80,
-      color: '#fb3f56',
-      border: 0,
-      radius: 10,
-      opacity: 0.06,
-      x: 3,
-      y: 3,
-      style: {marginVertical: 2},
-    };
-    return (
-      <BoxShadow setting={shadowOpt}>
-        <TouchableOpacity style={styles.elementView}>
-          <LinearGradient
-            colors={['#fb4444', '#fb4444', '#cc342c']}
-            style={styles.listElementView}>
-            <Text style={styles.listElementStyle}>{item.taskDescription}</Text>
-
-            <Text style={styles.timeStyle}>
-              {item.from} - {item.to}
-            </Text>
-          </LinearGradient>
-        </TouchableOpacity>
-      </BoxShadow>
-    );
-  };
-
-  const _renderList = () => {
-    return (
-      <FlatList
-        data={data}
-        renderItem={renderTaskList}
-        keyExtractor={(item, index) => index.toString()}
-      />
-    );
-  };
-
   const renderButton = () => {
     return (
       <TouchableOpacity onPress={toggleModal} style={styles.tabPlusButton}>
@@ -176,24 +97,80 @@ function HomeScreen() {
 
   const renderModalMessage = () => {
     return (
-      <Modal isVisible={isModalVisible} onBackdropPress={toggleModal} backdropColor='black'>
+      <Modal
+        isVisible={isModalVisible}
+        onBackdropPress={toggleModal}
+        backdropColor="black">
         <View style={styles.modalViewStyle}>
-          <TextInput multiline={true} style={styles.modalInputStyle} placeholder='Type your task' placeholderTextColor='gray'></TextInput>
-          <TouchableOpacity style={styles.modalSubmitButton} onPress={toggleModal}>
+          <TextInput
+            onChangeText={(text) => setTask(text)}
+            multiline={true}
+            style={styles.modalInputStyle}
+            placeholder="Type your task"
+            placeholderTextColor="gray"></TextInput>
+          <TouchableOpacity
+            style={styles.modalSubmitButton}
+            onPress={handleTask}>
             <Text style={styles.modalSubmitTextStyle}>Submit</Text>
           </TouchableOpacity>
         </View>
       </Modal>
     );
   };
-  
+
+  const renderList = () => {
+    const shadowOpt = {
+      width: 280,
+      height: 80,
+      color: '#fb3f56',
+      border: 0,
+      radius: 10,
+      opacity: 0.06,
+      x: 3,
+      y: 3,
+      style: {marginVertical: 2},
+    };
+    const today = new Date();
+    const date =
+      today.getFullYear() +
+      '-' +
+      (today.getMonth() + 1) +
+      '-' +
+      today.getDate();
+    const time =
+      today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+    return (
+      <ScrollView>
+        {taskItems.map((item, index) => {
+          return (
+            <BoxShadow key={index} setting={shadowOpt}>
+              <TouchableOpacity
+                onPress={() => completeTask(index)}
+                style={styles.elementView}>
+                <LinearGradient
+                  colors={['#fb4444', '#fb4444', '#cc342c']}
+                  style={styles.listElementView}>
+                  <Text style={styles.listElementStyle}>{item}</Text>
+
+                  <Text style={styles.timeStyle}>
+                    Date - {date}
+                    Time - {time}
+                  </Text>
+                </LinearGradient>
+              </TouchableOpacity>
+            </BoxShadow>
+          );
+        })}
+      </ScrollView>
+    );
+  };
   return (
     <>
       <HeaderComponent />
       <StatusBar backgroundColor="#fb4444" />
       {renderHomeHeader()}
       {renderTaskListHeading()}
-      {_renderList()}
+      {renderList()}
       {renderButton()}
       {renderModalMessage()}
     </>
