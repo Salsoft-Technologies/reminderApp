@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {
   Text,
   View,
@@ -14,14 +14,42 @@ import {BoxShadow} from 'react-native-shadow';
 import styles from './styles';
 import Modal from 'react-native-modal';
 import {AuthContext} from '../../navigation/AuthProvider';
+import * as firebaseobj from 'firebase';
+import {db} from '../../../config';
+if (!firebaseobj.apps.length) {
+  firebaseobj.initializeApp(db);
+}
+
 
 function HomeScreen() {
   const {user} = useContext(AuthContext);
   const [task, setTask] = useState();
   const [taskItems, setTaskItems] = useState([]);
+  const retrievedUser = user.uid;
+
+  const gettingData = () => {
+  const theDetails = firebaseobj.database().ref('Details');
+  theDetails.on('value', datasnap => {
+      const newDetails = datasnap.val()
+      const newData = Object.values(newDetails);
+      const newArray = newData.filter(obj => obj.userId === retrievedUser);
+      setTaskItems(newArray)
+  })
+}
+
+useEffect(()=>{
+  gettingData()
+}, [])
+
   const handleTask = () => {
     setTaskItems([...taskItems, task]);
     setTask(null);
+    const Details = firebaseobj.database().ref('Details');
+    Details.push({
+      userId: user.uid,
+      userEmail: user.email,
+      taskDescription: task
+    })
     setModalVisible(!isModalVisible);
   };
 
@@ -30,6 +58,7 @@ function HomeScreen() {
     itemsCopy.splice(index, 1);
     setTaskItems(itemsCopy);
   };
+
   const username = user.email.split('@')[0];
   const updatedUserName = username.charAt(0).toUpperCase() + username.slice(1);
 
@@ -141,8 +170,7 @@ function HomeScreen() {
       today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
     return (
       <ScrollView>
-        {taskItems.map((item, index) => {
-          return (
+        {taskItems.map((item, index) => (
             <BoxShadow key={index} setting={shadowOpt}>
               <TouchableOpacity
                 onPress={() => completeTask(index)}
@@ -150,20 +178,35 @@ function HomeScreen() {
                 <LinearGradient
                   colors={['#fb4444', '#fb4444', '#cc342c']}
                   style={styles.listElementView}>
-                  <Text style={styles.listElementStyle}>{item}</Text>
+                  <Text style={styles.listElementStyle}>{item.taskDescription}</Text>
 
                   <Text style={styles.timeStyle}>
-                    Date - {date}
-                    Time - {time}
+                    Date - {date} Time - {time}
                   </Text>
                 </LinearGradient>
               </TouchableOpacity>
             </BoxShadow>
-          );
-        })}
+        ))}
       </ScrollView>
     );
   };
+
+//   const renderAllHistory = ()=>{
+//     return(
+//         <>
+//             {historyData.map((data, index) => (
+//                 <View key={index} style={styles.historyMainView}>
+//                 <Image style={styles.historyCoinsImage} source={require('../../assets/images/quizIcons/victoryCoins.png')}/>
+//                 <View style={styles.historyCoinsView}>
+//                 <Text style={styles.historyTotalCoinsText}>{data.userEmail}</Text>
+//                 <Text style={styles.historyTotalCoins}><Text style={styles.historyScoredCoins}>{data.userScore}</Text> out of 5</Text>
+//                 <Text style={styles.historyTotalCoins}>{data.playedDate}</Text>
+//                 </View>
+//                 </View>
+//             ))}
+//         </>
+//     )
+// }
   return (
     <>
       <HeaderComponent />
