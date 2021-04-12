@@ -13,6 +13,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {BoxShadow} from 'react-native-shadow';
 import styles from './styles';
 import Modal from 'react-native-modal';
+import PushNotification from 'react-native-push-notification';
 import {AuthContext} from '../../navigation/AuthProvider';
 import * as firebaseobj from 'firebase';
 import {db} from '../../../config';
@@ -20,35 +21,59 @@ if (!firebaseobj.apps.length) {
   firebaseobj.initializeApp(db);
 }
 
-
 function HomeScreen() {
   const {user} = useContext(AuthContext);
   const [task, setTask] = useState();
   const [taskItems, setTaskItems] = useState([]);
-  const [id, setId] = useState([])
-    const retrievedUser = user.uid;
+  const [id, setId] = useState([]);
+  const retrievedUser = user.uid;
 
-const gettingData = () => {
-  const theDetails = firebaseobj.database().ref('Details');
-  theDetails.on('value', datasnap => {
-    if(datasnap.val()){
-      const newDetails = datasnap.val()
-      const todoList = [];
-      const newData = Object.values(newDetails);
-      const myDetails = Object.keys(newDetails);
-      for(let id in myDetails){
-        todoList.push(myDetails[id])
+  const gettingData = () => {
+    const theDetails = firebaseobj.database().ref('Details');
+    theDetails.on('value', (datasnap) => {
+      if (datasnap.val()) {
+        const newDetails = datasnap.val();
+        const todoList = [];
+        const newData = Object.values(newDetails);
+        const myDetails = Object.keys(newDetails);
+        for (let id in myDetails) {
+          todoList.push(myDetails[id]);
+        }
+        setId(todoList);
+        const newArray = newData.filter((obj) => obj.userId === retrievedUser);
+        setTaskItems(newArray);
+
+        PushNotification.configure({
+          onRegister: function (token) {
+            console.log('TOKEN:', token);
+          },
+          onNotification: function (notification) {
+            console.log('NOTIFICATION:', notification);
+            notification.finish(PushNotificationIOS.FetchResult.NoData);
+          },
+          onAction: function (notification) {
+            console.log('ACTION:', notification.action);
+            console.log('NOTIFICATION:', notification);
+          },
+          onRegistrationError: function (err) {
+            console.error(err.message, err);
+          },
+          permissions: {
+            alert: true,
+            badge: true,
+            sound: true,
+          },
+          popInitialNotification: true,
+          requestPermissions: true,
+        });
       }
-      setId(todoList);
-      const newArray = newData.filter(obj => obj.userId === retrievedUser);
-      setTaskItems(newArray)
-    }
-  })
-}
+    });
+    // testPush()
+  };
 
-useEffect(()=>{
-  gettingData()
-}, [])
+  useEffect(() => {
+    gettingData();
+  }, []);
 
   const handleTask = () => {
     setTaskItems([...taskItems, task]);
@@ -57,17 +82,58 @@ useEffect(()=>{
     Details.push({
       userId: user.uid,
       userEmail: user.email,
-      taskDescription: task
-    })
+      taskDescription: task,
+    });
     setModalVisible(!isModalVisible);
   };
 
+   PushNotification.createChannel(
+    {
+      channelId: "4", // (required)
+      channelName: "My channel", // (required)
+      channelDescription: "A channel to categorise your notifications", // (optional) default: undefined.
+      soundName: "default", // (optional) See `soundName` parameter of `localNotification` function
+      importance: 4, // (optional) default: 4. Int value of the Android notification importance
+      vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
+    },
+    (created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.);
+  )
+
+  PushNotification.getChannels(function (channel_ids) {
+    console.log(channel_ids, 'channels'); // ['channel_id_1']
+  });
+
+  // PushNotification.localNotification({
+  //   channelId: "4",
+  //   title: "Have you done your task?",
+  //   message: "Check out if you want to see more",
+  //   repeatType: 'time',
+  //   repeatTime: 30000, // 30 seconds
+  //   fireDate: Date.now()
+  // });
+
+  {
+    taskItems[0] ? PushNotification.localNotificationSchedule({
+      title: 'Task Message',
+      date: new Date(Date.now() + 3 * 1000),
+      message: taskItems[0] ? taskItems[0].taskDescription : 'World',
+      repeatType:'hour',
+      repeatTime:'1',
+      actions: '["Yes", "No"]',
+      allowWhileIdle: false,
+      channelId: '4',
+      playSound: true,
+      soundName: 'default',
+    }) : null
+  }
+  
   const completeTask = (index) => {
     let itemsCopy = [...taskItems];
     itemsCopy.splice(index, 1);
     setTaskItems(itemsCopy);
-    const updateDetails = firebaseobj.database().ref(`Details/${id}`).remove();
-    
+    // const updateDetails = firebaseobj.database().ref(`Details/${id}`).remove();
+    const updateDetails = firebaseobj.database().ref(`Details`).remove();
+
   };
 
   const username = user.email.split('@')[0];
@@ -182,21 +248,23 @@ useEffect(()=>{
     return (
       <>
         {taskItems.map((item, index) => (
-            <BoxShadow key={index} setting={shadowOpt}>
-              <TouchableOpacity
-                onPress={() => completeTask(index)}
-                style={styles.elementView}>
-                <LinearGradient
-                  colors={['#fb4444', '#fb4444', '#cc342c']}
-                  style={styles.listElementView}>
-                  <Text style={styles.listElementStyle}>{item.taskDescription}</Text>
+          <BoxShadow key={index} setting={shadowOpt}>
+            <TouchableOpacity
+              onPress={() => completeTask(index)}
+              style={styles.elementView}>
+              <LinearGradient
+                colors={['#fb4444', '#fb4444', '#cc342c']}
+                style={styles.listElementView}>
+                <Text style={styles.listElementStyle}>
+                  {item.taskDescription}
+                </Text>
 
-                  <Text style={styles.timeStyle}>
-                    Date - {date} Time - {time}
-                  </Text>
-                </LinearGradient>
-              </TouchableOpacity>
-            </BoxShadow>
+                <Text style={styles.timeStyle}>
+                  Date - {date} Time - {time}
+                </Text>
+              </LinearGradient>
+            </TouchableOpacity>
+          </BoxShadow>
         ))}
       </>
     );
@@ -209,9 +277,13 @@ useEffect(()=>{
       {renderHomeHeader()}
       {renderTaskListHeading()}
       {/* {renderList()} */}
-      {
-        taskItems != '' ? <ScrollView>{renderList()}</ScrollView> : <View style={styles.noTasksView}><Text style={styles.noTasksTextStyle}>No tasks assigned</Text></View>
-      }
+      {taskItems != '' ? (
+        <ScrollView>{renderList()}</ScrollView>
+      ) : (
+        <View style={styles.noTasksView}>
+          <Text style={styles.noTasksTextStyle}>No tasks assigned</Text>
+        </View>
+      )}
       {renderButton()}
       {renderModalMessage()}
     </>
