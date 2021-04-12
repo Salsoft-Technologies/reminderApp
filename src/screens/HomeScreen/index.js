@@ -25,15 +25,24 @@ function HomeScreen() {
   const {user} = useContext(AuthContext);
   const [task, setTask] = useState();
   const [taskItems, setTaskItems] = useState([]);
+  const [id, setId] = useState([])
     const retrievedUser = user.uid;
 
 const gettingData = () => {
   const theDetails = firebaseobj.database().ref('Details');
   theDetails.on('value', datasnap => {
+    if(datasnap.val()){
       const newDetails = datasnap.val()
+      const todoList = [];
       const newData = Object.values(newDetails);
+      const myDetails = Object.keys(newDetails);
+      for(let id in myDetails){
+        todoList.push(myDetails[id])
+      }
+      setId(todoList);
       const newArray = newData.filter(obj => obj.userId === retrievedUser);
       setTaskItems(newArray)
+    }
   })
 }
 
@@ -57,9 +66,8 @@ useEffect(()=>{
     let itemsCopy = [...taskItems];
     itemsCopy.splice(index, 1);
     setTaskItems(itemsCopy);
-    firebaseobj.database()
-    .ref(index)
-    .remove();
+    const updateDetails = firebaseobj.database().ref(`Details/${id}`).remove();
+    
   };
 
   const username = user.email.split('@')[0];
