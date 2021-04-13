@@ -16,6 +16,9 @@ import styles from './styles';
 import Modal from 'react-native-modal';
 import PushNotification from 'react-native-push-notification';
 import {AuthContext} from '../../navigation/AuthProvider';
+import { LogBox } from 'react-native';
+
+LogBox.ignoreLogs(['Setting a timer']);
 import vw from '../../utils/units/vw';
 import vh from '../../utils/units/vh';
 
@@ -200,7 +203,6 @@ function HomeScreen() {
         <View style={styles.modalViewStyle}>
           <TextInput
             onChangeText={(text) => setTask(text)}
-            multiline={true}
             style={styles.modalInputStyle}
             placeholder="Type your task"
             placeholderTextColor="gray"></TextInput>
@@ -224,7 +226,8 @@ function HomeScreen() {
   const _renderFirstItems = ({item}) => {
     const shadowOpt = {
       width: 70 * vw,
-      height: 80,
+      // height: 85,
+      height: 13 * vh,
       color: '#fb3f56',
       border: 0,
       radius: 10,
@@ -233,23 +236,14 @@ function HomeScreen() {
       y: 3,
       style: {marginVertical: 2},
     };
-    const today = new Date();
-    const date =
-      today.getFullYear() +
-      '-' +
-      (today.getMonth() + 1) +
-      '-' +
-      today.getDate();
-    const time =
-      today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
     return (
       <BoxShadow setting={shadowOpt}>
-        <TouchableOpacity
-          onPress={() => deleteAd(item)}
+        <View
           style={styles.elementView}>
           <LinearGradient
             colors={['#fb4444', '#fb4444', '#cc342c']}
             style={styles.listElementView}>
+            <View style={styles.rowView}>
             <Text style={styles.listElementStyle}>
               {item[1].taskDescription}
             </Text>
@@ -257,8 +251,14 @@ function HomeScreen() {
             <Text style={styles.timeStyle}>
               Date - {item[1].taskDate}   Time - {item[1].taskTime}
             </Text>
+            </View>
+
+            <TouchableOpacity onPress={() => deleteAd(item)}>
+            <Image resizeMode='center' source={require('../../assets/images/delete.png')}/>
+          </TouchableOpacity>
+         
           </LinearGradient>
-        </TouchableOpacity>
+        </View>
       </BoxShadow>
     );
   };

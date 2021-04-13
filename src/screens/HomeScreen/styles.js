@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native';
 import vw from '../../utils/units/vw';
 import vh from '../../utils/units/vh';
-import { NativeViewGestureHandler } from 'react-native-gesture-handler';
+import {NativeViewGestureHandler} from 'react-native-gesture-handler';
 
 export default StyleSheet.create({
   homeHeaderStyleView: {
@@ -49,6 +49,7 @@ export default StyleSheet.create({
   listElementView: {
     padding: 2.5 * vh,
     borderRadius: 5 * vw,
+    flexDirection: 'row',
   },
 
   elementView: {
@@ -100,14 +101,14 @@ export default StyleSheet.create({
     backgroundColor: 'white',
     opacity: 0.8,
     borderRadius: 5 * vw,
-    paddingBottom: 2 * vh
+    paddingBottom: 2 * vh,
   },
 
   modalInputStyle: {
     color: 'black',
     backgroundColor: '#fdce84',
     borderRadius: 2 * vw,
-    paddingHorizontal: 3 * vw
+    paddingHorizontal: 3 * vw,
   },
 
   modalSubmitButton: {
@@ -117,20 +118,23 @@ export default StyleSheet.create({
     marginHorizontal: 20 * vw,
     borderRadius: 3 * vw,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
 
   modalSubmitTextStyle: {
-    color: '#fff'
+    color: '#fff',
   },
 
   noTasksView: {
     backgroundColor: '#fdce84',
     padding: 4 * vh,
     margin: 2 * vh,
-    borderRadius: 3 * vh
+    borderRadius: 3 * vh,
   },
 
-  noTasksTextStyle: {
-  }
+  noTasksTextStyle: {},
+
+  rowView: {
+    width: 48 * vw,
+  },
 });
