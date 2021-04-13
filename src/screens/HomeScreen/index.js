@@ -52,7 +52,7 @@ function HomeScreen() {
           },
           onNotification: function (notification) {
             console.log('NOTIFICATION:', notification);
-            notification.finish(PushNotificationIOS.FetchResult.NoData);
+            // notification.finish(PushNotificationIOS.FetchResult.NoData);
           },
           onAction: function (notification) {
             console.log('ACTION:', notification.action);
@@ -75,6 +75,21 @@ function HomeScreen() {
 
   useEffect(() => {
     gettingData();
+    {
+      taskItems
+        ? PushNotification.localNotificationSchedule({
+            title: 'Task Message',
+            date: new Date(Date.now() + 3 * 1000),
+            message: 'You have a task to complete',
+            repeatType: 'minute',
+            repeatTime: '1',
+            allowWhileIdle: false,
+            channelId: '4',
+            playSound: true,
+            soundName: 'default',
+          })
+        : null;
+    }
   }, []);
 
   const handleTask = () => {
@@ -96,38 +111,25 @@ function HomeScreen() {
     setModalVisible(!isModalVisible);
   };
 
-  PushNotification.createChannel(
-    {
-      channelId: '4', // (required)
-      channelName: 'My channel', // (required)
-      channelDescription: 'A channel to categorise your notifications', // (optional) default: undefined.
-      soundName: 'default', // (optional) See `soundName` parameter of `localNotification` function
-      importance: 4, // (optional) default: 4. Int value of the Android notification importance
-      vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
-    },
-    (created) => console.log(`createChannel returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.);
-  );
+  // PushNotification.createChannel(
+  //   {
+  //     channelId: '4', // (required)
+  //     channelName: 'My channel', // (required)
+  //     channelDescription: 'A channel to categorise your notifications', // (optional) default: undefined.
+  //     soundName: 'default', // (optional) See `soundName` parameter of `localNotification` function
+  //     importance: 4, // (optional) default: 4. Int value of the Android notification importance
+  //     vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
+  //   },
+  //   (created) => console.log(`createChannel returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.);
+  // );
 
-  PushNotification.getChannels(function (channel_ids) {
-    console.log(channel_ids, 'channels'); // ['channel_id_1']
-  });
+  // PushNotification.getChannels(function (channel_ids) {
+  //   console.log(channel_ids, 'channels'); // ['channel_id_1']
+  // });
+  
+  
+ 
 
-  {
-    taskItems[0]
-      ? PushNotification.localNotificationSchedule({
-          title: 'Task Message',
-          date: new Date(Date.now() + 3 * 1000),
-          message: taskItems[0] ? taskItems[0].taskDescription : 'World',
-          repeatType: 'hour',
-          repeatTime: '1',
-          actions: '["Yes", "No"]',
-          allowWhileIdle: false,
-          channelId: '4',
-          playSound: true,
-          soundName: 'default',
-        })
-      : null;
-  }
 
   const username = user.email.split('@')[0];
   const updatedUserName = username.charAt(0).toUpperCase() + username.slice(1);
@@ -225,7 +227,7 @@ function HomeScreen() {
 
   const _renderFirstItems = ({item}) => {
     const shadowOpt = {
-      width: 70 * vw,
+      width: 69 * vw,
       // height: 85,
       height: 13 * vh,
       color: '#fb3f56',
@@ -233,7 +235,7 @@ function HomeScreen() {
       radius: 10,
       opacity: 0.06,
       x: 3,
-      y: 3,
+      y: 7,
       style: {marginVertical: 2},
     };
     return (
@@ -266,7 +268,7 @@ function HomeScreen() {
   return (
     <>
       <HeaderComponent />
-      <StatusBar backgroundColor="#fb4444" />
+      <StatusBar backgroundColor="brown" opacity= '0.9' />
       {renderHomeHeader()}
       {renderTaskListHeading()}
       {taskItems != '' ? (

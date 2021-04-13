@@ -87,7 +87,7 @@ function ProfileScreen() {
   };
   return (
     <View style={styles.mainScreenView}>
-      <StatusBar backgroundColor="#fb4050" />
+      <StatusBar backgroundColor="brown" opacity='0.8' />
       <UserAccessHeader title="Profile Details" />
       {renderRotateView()}
       {renderAvatar()}
