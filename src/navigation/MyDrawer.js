@@ -6,6 +6,7 @@ import {
   ScrollView,
   StyleSheet,
   Image,
+  Share
 } from 'react-native';
 import 'react-native-gesture-handler';
 import {createDrawerNavigator} from '@react-navigation/drawer';
@@ -18,6 +19,16 @@ import {AuthContext} from '../navigation/AuthProvider';
 
 function MyDrawer({navigation}) {
   const {logout, user} =useContext(AuthContext);
+
+  const onShare = async () => {
+    const invitation =
+      'Hey there, stuck at remembering your routine? Let me help you';
+    try {
+      const result = await Share.share({
+        message: invitation,
+      });
+    } catch (error) {}
+  };
 
   const CustomDrawerComponent = (props) => (
     <SafeAreaView style={styles.mainDrawerView}>
@@ -34,6 +45,7 @@ function MyDrawer({navigation}) {
           <Text style={styles.nameLocationStyle}>LA, USA</Text>
         </View>
 
+        
         <View style={styles.allDrawerItemsView}>
           <ScrollView>
             <TouchableOpacity style={styles.drawerItemStyleView}>
@@ -45,9 +57,9 @@ function MyDrawer({navigation}) {
                 />
               </View>
 
-              <View style={styles.drawerTextView}>
+              <TouchableOpacity onPress={() => onShare()} style={styles.drawerTextView}>
                 <Text style={styles.drawerTextStyle}>Invite</Text>
-              </View>
+              </TouchableOpacity>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.drawerItemStyleView}>
