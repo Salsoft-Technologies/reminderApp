@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {Share, Text, View} from 'react-native';
+import {Share, Text, View, StatusBar} from 'react-native';
 import UserAccessHeader from '../../components/UserAccessHeader/index';
 import LottieView from 'lottie-react-native';
 import styles from './styles';
@@ -87,6 +87,7 @@ function ProfileScreen() {
   };
   return (
     <View style={styles.mainScreenView}>
+      <StatusBar backgroundColor="#fb4050" />
       <UserAccessHeader title="Profile Details" />
       {renderRotateView()}
       {renderAvatar()}

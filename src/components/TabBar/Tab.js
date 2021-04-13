@@ -10,11 +10,13 @@ const Tab = ({tab, icon, onPress, color, selected, text}) => {
       <TouchableOpacity onPress={onPress} style={styles.container}>
         {tab.name === 'HomeScreen' ? (
           <Image
+          resizeMode='contain'
             style={styles.navIconSize}
             source={require('../../assets/images/cube.png')}
           />
         )  : (
           <Image
+          resizeMode='contain'
             style={styles.navIconSize}
             source={require('../../assets/images/profile.png')}
           />

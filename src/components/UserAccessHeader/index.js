@@ -10,6 +10,7 @@ function UserAccessHeader(props) {
     <View style={styles.headerView}>
       <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerIconView}>
         <Image
+        resizeMode='contain'
           style={styles.iconStyle}
           source={require('../../assets/images/back.png')}
         />

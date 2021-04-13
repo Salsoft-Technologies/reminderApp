@@ -85,7 +85,7 @@ export default StyleSheet.create({
   tabPlusButton: {
     position: 'absolute',
     bottom: 2 * vh,
-    paddingLeft: 50 * vh,
+    paddingLeft: 47 * vh,
   },
 
   buttonStyle: {

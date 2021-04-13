@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   TextInput,
   Image,
+  FlatList,
 } from 'react-native';
 import HeaderComponent from '../../components/HeaderComponent/index';
 import LinearGradient from 'react-native-linear-gradient';
@@ -15,6 +16,9 @@ import styles from './styles';
 import Modal from 'react-native-modal';
 import PushNotification from 'react-native-push-notification';
 import {AuthContext} from '../../navigation/AuthProvider';
+import vw from '../../utils/units/vw';
+import vh from '../../utils/units/vh';
+
 import * as firebaseobj from 'firebase';
 import {db} from '../../../config';
 if (!firebaseobj.apps.length) {
@@ -25,7 +29,6 @@ function HomeScreen() {
   const {user} = useContext(AuthContext);
   const [task, setTask] = useState();
   const [taskItems, setTaskItems] = useState([]);
-  const [id, setId] = useState([]);
   const retrievedUser = user.uid;
 
   const gettingData = () => {
@@ -33,14 +36,11 @@ function HomeScreen() {
     theDetails.on('value', (datasnap) => {
       if (datasnap.val()) {
         const newDetails = datasnap.val();
-        const todoList = [];
-        const newData = Object.values(newDetails);
-        const myDetails = Object.keys(newDetails);
-        for (let id in myDetails) {
-          todoList.push(myDetails[id]);
-        }
-        setId(todoList);
-        const newArray = newData.filter((obj) => obj.userId === retrievedUser);
+        const updatedDetails = Object.entries(newDetails);
+        const yesDetails = Object.values(updatedDetails);
+        const newArray = yesDetails.filter(
+          (obj) => obj[1].userId === retrievedUser,
+        );
         setTaskItems(newArray);
 
         PushNotification.configure({
@@ -68,7 +68,6 @@ function HomeScreen() {
         });
       }
     });
-    // testPush()
   };
 
   useEffect(() => {
@@ -83,58 +82,49 @@ function HomeScreen() {
       userId: user.uid,
       userEmail: user.email,
       taskDescription: task,
+      taskDate:
+      new Date().getFullYear() +
+        '-' +
+        (new Date().getMonth() + 1) +
+        '-' +
+        new Date().getDate(),
+      taskTime: new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date().getSeconds()
     });
     setModalVisible(!isModalVisible);
   };
 
-   PushNotification.createChannel(
+  PushNotification.createChannel(
     {
-      channelId: "4", // (required)
-      channelName: "My channel", // (required)
-      channelDescription: "A channel to categorise your notifications", // (optional) default: undefined.
-      soundName: "default", // (optional) See `soundName` parameter of `localNotification` function
+      channelId: '4', // (required)
+      channelName: 'My channel', // (required)
+      channelDescription: 'A channel to categorise your notifications', // (optional) default: undefined.
+      soundName: 'default', // (optional) See `soundName` parameter of `localNotification` function
       importance: 4, // (optional) default: 4. Int value of the Android notification importance
       vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
     },
-    (created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.);
-  )
+    (created) => console.log(`createChannel returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.);
+  );
 
   PushNotification.getChannels(function (channel_ids) {
     console.log(channel_ids, 'channels'); // ['channel_id_1']
   });
 
-  // PushNotification.localNotification({
-  //   channelId: "4",
-  //   title: "Have you done your task?",
-  //   message: "Check out if you want to see more",
-  //   repeatType: 'time',
-  //   repeatTime: 30000, // 30 seconds
-  //   fireDate: Date.now()
-  // });
-
   {
-    taskItems[0] ? PushNotification.localNotificationSchedule({
-      title: 'Task Message',
-      date: new Date(Date.now() + 3 * 1000),
-      message: taskItems[0] ? taskItems[0].taskDescription : 'World',
-      repeatType:'hour',
-      repeatTime:'1',
-      actions: '["Yes", "No"]',
-      allowWhileIdle: false,
-      channelId: '4',
-      playSound: true,
-      soundName: 'default',
-    }) : null
+    taskItems[0]
+      ? PushNotification.localNotificationSchedule({
+          title: 'Task Message',
+          date: new Date(Date.now() + 3 * 1000),
+          message: taskItems[0] ? taskItems[0].taskDescription : 'World',
+          repeatType: 'hour',
+          repeatTime: '1',
+          actions: '["Yes", "No"]',
+          allowWhileIdle: false,
+          channelId: '4',
+          playSound: true,
+          soundName: 'default',
+        })
+      : null;
   }
-  
-  const completeTask = (index) => {
-    let itemsCopy = [...taskItems];
-    itemsCopy.splice(index, 1);
-    setTaskItems(itemsCopy);
-    // const updateDetails = firebaseobj.database().ref(`Details/${id}`).remove();
-    const updateDetails = firebaseobj.database().ref(`Details`).remove();
-
-  };
 
   const username = user.email.split('@')[0];
   const updatedUserName = username.charAt(0).toUpperCase() + username.slice(1);
@@ -224,9 +214,16 @@ function HomeScreen() {
     );
   };
 
-  const renderList = () => {
+  const deleteAd = (item, index, key) => {
+    let itemsCopy = [...taskItems];
+    itemsCopy.splice(index, 1);
+    setTaskItems(itemsCopy);
+    firebaseobj.database().ref(`Details/${item[0]}`).remove();
+  };
+
+  const _renderFirstItems = ({item}) => {
     const shadowOpt = {
-      width: 280,
+      width: 70 * vw,
       height: 80,
       color: '#fb3f56',
       border: 0,
@@ -246,27 +243,23 @@ function HomeScreen() {
     const time =
       today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
     return (
-      <>
-        {taskItems.map((item, index) => (
-          <BoxShadow key={index} setting={shadowOpt}>
-            <TouchableOpacity
-              onPress={() => completeTask(index)}
-              style={styles.elementView}>
-              <LinearGradient
-                colors={['#fb4444', '#fb4444', '#cc342c']}
-                style={styles.listElementView}>
-                <Text style={styles.listElementStyle}>
-                  {item.taskDescription}
-                </Text>
+      <BoxShadow setting={shadowOpt}>
+        <TouchableOpacity
+          onPress={() => deleteAd(item)}
+          style={styles.elementView}>
+          <LinearGradient
+            colors={['#fb4444', '#fb4444', '#cc342c']}
+            style={styles.listElementView}>
+            <Text style={styles.listElementStyle}>
+              {item[1].taskDescription}
+            </Text>
 
-                <Text style={styles.timeStyle}>
-                  Date - {date} Time - {time}
-                </Text>
-              </LinearGradient>
-            </TouchableOpacity>
-          </BoxShadow>
-        ))}
-      </>
+            <Text style={styles.timeStyle}>
+              Date - {item[1].taskDate}   Time - {item[1].taskTime}
+            </Text>
+          </LinearGradient>
+        </TouchableOpacity>
+      </BoxShadow>
     );
   };
 
@@ -276,14 +269,20 @@ function HomeScreen() {
       <StatusBar backgroundColor="#fb4444" />
       {renderHomeHeader()}
       {renderTaskListHeading()}
-      {/* {renderList()} */}
       {taskItems != '' ? (
-        <ScrollView>{renderList()}</ScrollView>
+        <FlatList
+          data={taskItems}
+          renderItem={_renderFirstItems}
+          showsVerticalScrollIndicator={false}
+          scrollEnabled={true}
+          keyExtractor={(item, index) => index.toString()}
+        />
       ) : (
         <View style={styles.noTasksView}>
           <Text style={styles.noTasksTextStyle}>No tasks assigned</Text>
         </View>
       )}
+
       {renderButton()}
       {renderModalMessage()}
     </>
