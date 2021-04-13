@@ -12,6 +12,14 @@ function SignupScreen({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const checkSignUpandler = (email, password, name) => {
+    if ((email === '', password === '', name === '')) {
+      alert('Some fields are missing');
+    } else {
+      register(email, password, name);
+    }
+  };
+
   const renderSignUpAnimation = () => {
     return(
         <LottieView style={styles.signUpAnimationStyle} source={require('../../assets/animation/signUpAnimation.json')} autoPlay loop />
@@ -50,7 +58,7 @@ function SignupScreen({navigation}) {
 
   const signUpButton = () => {
     return (
-      <TouchableOpacity onPress={() => register(email, password, name)} style={styles.submitLoginView}>
+      <TouchableOpacity onPress={() => checkSignUpandler(email, password, name)} style={styles.submitLoginView}>
         <Text style={styles.loginSubmitText}>Create Account</Text>
       </TouchableOpacity>
     );

@@ -13,8 +13,8 @@ function NotificationScreen({navigation}){
                </View>
 
                <View style={styles.notificationHeadingView}>
-                   <Text style={styles.notificationHeadingText}>Did you know?</Text>
-                   <Text style={styles.notificationSubHeadingText}>Here is something that you need to know</Text>
+                   <Text style={styles.notificationHeadingText}>Share this with your friends</Text>
+                   <Text style={styles.notificationSubHeadingText}>Help them to track their routine</Text>
                </View>
            </TouchableOpacity>
         )

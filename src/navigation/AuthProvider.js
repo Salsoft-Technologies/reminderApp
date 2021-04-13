@@ -1,6 +1,5 @@
 import React, {useState, createContext, useEffect} from 'react';
 import auth from '@react-native-firebase/auth';
-
 export const AuthContext = createContext();
 
 export const AuthProvider = ({children}) => {
@@ -18,6 +17,7 @@ export const AuthProvider = ({children}) => {
             switch (e.code) {
               case 'auth/wrong-password':
                 alert('Incorrect Email or Password');
+                
                 break;
               case 'auth/user-not-found':
                 alert('User does not exist');
@@ -32,7 +32,7 @@ export const AuthProvider = ({children}) => {
                 break;
             }
             console.log(e);
-            // alert(e);
+            alert(e);
           }
         },
 

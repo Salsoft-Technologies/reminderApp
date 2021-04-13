@@ -11,6 +11,14 @@ function LoginScreen({navigation}){
     const [password, setPassword] = useState('');
     const {login, user} = useContext(AuthContext);
 
+    const checkLoginHandler = (email, password) => {
+        if (email === '' && password === '') {
+          alert('Email or Password is missing');
+        } else {
+          login(email, password);
+        }
+      };
+
     const renderAnimation = () => {
         return(
             <LottieView style={styles.animationStyle} source={require('../../assets/animation/myAnimation2.json')} autoPlay loop />
@@ -31,7 +39,7 @@ function LoginScreen({navigation}){
 
     const loginButton = () => {
         return(
-            <TouchableOpacity onPress={() => login(email, password)} style={styles.submitLoginView}>
+            <TouchableOpacity onPress={() => checkLoginHandler(email, password)} style={styles.submitLoginView}>
                 <Text style={styles.loginSubmitText}>Log in</Text>
             </TouchableOpacity>
         )
