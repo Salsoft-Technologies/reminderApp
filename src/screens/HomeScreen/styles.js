@@ -55,8 +55,7 @@ export default StyleSheet.create({
   elementView: {
     padding: 0.5 * vh,
     paddingHorizontal: 2 * vw,
-    width: 70 * vw,
-    paddingTop: 1 * vh,
+    width: 80 * vw,
   },
 
   listElementStyle: {
@@ -86,7 +85,8 @@ export default StyleSheet.create({
   tabPlusButton: {
     position: 'absolute',
     bottom: 2 * vh,
-    paddingLeft: 47 * vh,
+    alignSelf: 'flex-end',
+    paddingRight: 2 * vw
   },
 
   buttonStyle: {
@@ -135,6 +135,6 @@ export default StyleSheet.create({
   noTasksTextStyle: {},
 
   rowView: {
-    width: 48 * vw,
+    width: 58 * vw,
   },
 });

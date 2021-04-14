@@ -30,7 +30,7 @@ if (!firebaseobj.apps.length) {
 
 function HomeScreen() {
   const {user} = useContext(AuthContext);
-  const [task, setTask] = useState();
+  const [task, setTask] = useState('An Empty Task');
   const [taskItems, setTaskItems] = useState([]);
   const retrievedUser = user.uid;
 
@@ -81,7 +81,7 @@ function HomeScreen() {
             title: 'Task Message',
             date: new Date(Date.now() + 3 * 1000),
             message: 'You have a task to complete',
-            repeatType: 'minute',
+            repeatType: 'hour',
             repeatTime: '1',
             allowWhileIdle: false,
             channelId: '4',
@@ -94,7 +94,7 @@ function HomeScreen() {
 
   const handleTask = () => {
     setTaskItems([...taskItems, task]);
-    setTask(null);
+    // setTask(null);
     const Details = firebaseobj.database().ref('Details');
     Details.push({
       userId: user.uid,
@@ -111,26 +111,24 @@ function HomeScreen() {
     setModalVisible(!isModalVisible);
   };
 
-  // PushNotification.createChannel(
-  //   {
-  //     channelId: '4', // (required)
-  //     channelName: 'My channel', // (required)
-  //     channelDescription: 'A channel to categorise your notifications', // (optional) default: undefined.
-  //     soundName: 'default', // (optional) See `soundName` parameter of `localNotification` function
-  //     importance: 4, // (optional) default: 4. Int value of the Android notification importance
-  //     vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
-  //   },
-  //   (created) => console.log(`createChannel returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.);
-  // );
+  PushNotification.createChannel(
+    {
+      channelId: '4', // (required)
+      channelName: 'My channel', // (required)
+      channelDescription: 'A channel to categorise your notifications', // (optional) default: undefined.
+      soundName: 'default', // (optional) See `soundName` parameter of `localNotification` function
+      importance: 4, // (optional) default: 4. Int value of the Android notification importance
+      vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
+    },
+    (created) => console.log(`createChannel returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.);
+  );
 
-  // PushNotification.getChannels(function (channel_ids) {
-  //   console.log(channel_ids, 'channels'); // ['channel_id_1']
-  // });
-  
-  
+  PushNotification.getChannels(function (channel_ids) {
+    console.log(channel_ids, 'channels'); // ['channel_id_1']
+  });
+
  
-
-
+  
   const username = user.email.split('@')[0];
   const updatedUserName = username.charAt(0).toUpperCase() + username.slice(1);
 

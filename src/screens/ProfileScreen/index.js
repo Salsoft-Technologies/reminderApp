@@ -68,23 +68,6 @@ function ProfileScreen() {
     );
   };
 
-  const onShare = async () => {
-    const invitation =
-      'Hey there, stuck at remembering your routine? Let me help you';
-    try {
-      const result = await Share.share({
-        message: invitation,
-      });
-    } catch (error) {}
-  };
-
-  const renderInviteOthers = () => {
-    return (
-      <TouchableOpacity onPress={() => onShare()} style={styles.inviteButton}>
-        <Text style={styles.inviteText}>Invite others</Text>
-      </TouchableOpacity>
-    );
-  };
   return (
     <View style={styles.mainScreenView}>
       <StatusBar backgroundColor="brown" opacity='0.8' />
@@ -93,7 +76,7 @@ function ProfileScreen() {
       {renderAvatar()}
       {renderDetails()}
       {renderOtherDetailsHeading()}
-      {renderInviteOthers()}
+      
     </View>
   );
 }

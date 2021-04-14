@@ -66,6 +66,7 @@ export default StyleSheet.create({
 
   inviteButton: {
     alignItems: 'flex-end',
+    paddingTop: 3 * vh
   },
 
   inviteText: {

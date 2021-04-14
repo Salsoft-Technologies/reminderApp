@@ -20,16 +20,6 @@ import {AuthContext} from '../navigation/AuthProvider';
 function MyDrawer({navigation}) {
   const {logout, user} =useContext(AuthContext);
 
-  const onShare = async () => {
-    const invitation =
-      'Hey there, stuck at remembering your routine? Let me help you';
-    try {
-      const result = await Share.share({
-        message: invitation,
-      });
-    } catch (error) {}
-  };
-
   const CustomDrawerComponent = (props) => (
     <SafeAreaView style={styles.mainDrawerView}>
       <View style={styles.drawerView}>
@@ -48,20 +38,6 @@ function MyDrawer({navigation}) {
         
         <View style={styles.allDrawerItemsView}>
           <ScrollView>
-            <TouchableOpacity style={styles.drawerItemStyleView}>
-              <View style={styles.drawerItemIconView}>
-                <Image
-                  resizeMode="contain"
-                  style={styles.drawerIcon}
-                  source={require('../assets/images/invite.png')}
-                />
-              </View>
-
-              <TouchableOpacity onPress={() => onShare()} style={styles.drawerTextView}>
-                <Text style={styles.drawerTextStyle}>Invite</Text>
-              </TouchableOpacity>
-            </TouchableOpacity>
-
             <TouchableOpacity style={styles.drawerItemStyleView}>
               <View style={styles.drawerItemIconView}>
                 <Image

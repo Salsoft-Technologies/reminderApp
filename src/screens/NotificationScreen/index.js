@@ -1,13 +1,23 @@
 import React from 'react';
-import {Text, View, Image, Touchable, TouchableOpacity} from 'react-native';
+import {Text, View, Image, Touchable, TouchableOpacity, Share} from 'react-native';
 import UserAccessHeader from '../../components/UserAccessHeader/index';
 
 import styles from './styles';
 
 function NotificationScreen({navigation}){
+    const onShare = async () => {
+        const invitation =
+          'Hey there, stuck at remembering your routine? Let me help you';
+        try {
+          const result = await Share.share({
+            message: invitation,
+          });
+        } catch (error) {}
+      };
+
     const renderNotification = () => {
         return(
-           <TouchableOpacity style={styles.notificationMainView}>
+           <TouchableOpacity onPress={() => onShare()} style={styles.notificationMainView}>
                <View style={styles.notificationBlueBar}>
                <Image resizeMode='contain' style={styles.notificationIconStyle} source={require('../../assets/images/message.png')}/>
                </View>
@@ -19,6 +29,7 @@ function NotificationScreen({navigation}){
            </TouchableOpacity>
         )
     }
+
     return(
         <View style={styles.mainScreen}>
         <UserAccessHeader title = 'Notifications'/>
