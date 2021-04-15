@@ -16,6 +16,7 @@ import styles from './styles';
 import Modal from 'react-native-modal';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import PushNotification from 'react-native-push-notification';
+import Draggable from 'react-native-draggable';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {AuthContext} from '../../navigation/AuthProvider';
 import {LogBox} from 'react-native';
@@ -96,8 +97,6 @@ function HomeScreen() {
         : console.log('No Items');
     }
   }, []);
-
-  const NotifyMe = () => {};
 
   const onChange = (event, selectedDate, selectedTime) => {
     const currentDate = selectedDate || date;
@@ -294,12 +293,28 @@ function HomeScreen() {
     );
   };
 
+  const newButton = () => {
+    return (
+      <Draggable x={370} y={600}>
+        <TouchableOpacity onPress={toggleModal} style={styles.tabPlusButton}>
+          <LinearGradient
+            colors={['#8e2de2', '#4a00e0', '#8066dc']}
+            style={styles.buttonStyle}>
+            <Image
+              resizeMode="contain"
+              source={require('../../assets/images/plus.png')}
+            />
+          </LinearGradient>
+        </TouchableOpacity>
+      </Draggable>
+    );
+  };
+
   return (
     <>
       <HeaderComponent />
       <StatusBar backgroundColor="brown" opacity="0.9" />
       {renderHomeHeader()}
-
       {renderTaskListHeading()}
       {taskItems != '' ? (
         <FlatList
@@ -314,7 +329,9 @@ function HomeScreen() {
           <Text style={styles.noTasksTextStyle}>No tasks assigned</Text>
         </View>
       )}
-      {renderButton()}
+      {/* {renderButton()} */}
+      {newButton()}
+
       {renderModalMessage()}
     </>
   );
