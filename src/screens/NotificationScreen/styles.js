@@ -21,22 +21,21 @@ export default StyleSheet.create({
 
   notificationHeadingView: {
     justifyContent: 'center',
-    paddingLeft: 2 * vw,
+    paddingLeft: 3 * vw,
   },
 
   notificationHeadingText: {
-    fontSize: 2.5 * vh,
+    fontSize: 2 * vh,
   },
 
   notificationSubHeadingText: {
-    fontSize: 2 * vh,
     color: 'gray',
   },
 
   notificationIconStyle: {
     height: 8 * vh,
     width: 10 * vw,
-    marginLeft: 2 * vh,
+    marginLeft: 1 * vh,
   },
 
   notificationBlueBar: {

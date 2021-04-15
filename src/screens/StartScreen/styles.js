@@ -9,7 +9,7 @@ export default StyleSheet.create({
   },
 
   headingStyleView: {
-    paddingTop: 3 * vh,
+    paddingTop: 5 * vh,
   },
 
   headingTextStyle: {
@@ -25,13 +25,13 @@ export default StyleSheet.create({
   tagLineStyleView: {},
 
   tagLineStyle: {
-    fontSize: 4 * vh,
+    fontSize: 3.5 * vh,
     alignSelf: 'center',
     letterSpacing: 0.5 * vw,
   },
 
   tagLineStyle2: {
-    fontSize: 4 * vh,
+    fontSize: 3.5 * vh,
     alignSelf: 'center',
     letterSpacing: 0.5 * vw,
     bottom: 1.5 * vh,
@@ -45,7 +45,7 @@ export default StyleSheet.create({
   },
 
   startButton: {
-    marginTop: 3 * vh,
+    marginTop: 2 * vh,
     paddingVertical: 2.5 * vh,
     marginHorizontal: 30 * vw,
     justifyContent: 'center',
@@ -54,7 +54,7 @@ export default StyleSheet.create({
   startButtonTextStyle: {
     alignSelf: 'center',
     color: 'white',
-    fontSize: 2.8 * vh,
+    fontSize: 2 * vh,
     letterSpacing: 0.2 * vw,
   },
 

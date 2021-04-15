@@ -13,7 +13,7 @@ AppRegistry.registerComponent(appName, () => Providers);
 const Providers = () => {
   return (
     <AuthProvider>
-      <App/>
+      <App />
     </AuthProvider>
   );
 };

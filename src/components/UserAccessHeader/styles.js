@@ -5,7 +5,7 @@ import vh from '../../utils/units/vh';
 export default StyleSheet.create({
   headerView: {
     flexDirection: 'row',
-    paddingTop: 1.5 * vh
+    paddingTop: 2 * vh,
   },
 
   headerIconView: {
@@ -16,18 +16,19 @@ export default StyleSheet.create({
   },
 
   loginHeaderTextView: {
-      justifyContent: 'center',
-      alignSelf: 'center',
-      paddingLeft: 4 * vw,
+    justifyContent: 'center',
+    alignSelf: 'center',
+    paddingLeft: 4 * vw,
   },
 
   loginHeaderTextStyle: {
-      color: 'white',
-      fontSize: 3.5 * vh,
-      fontWeight: 'bold'
-    },
+    color: 'white',
+    fontSize: 3 * vh,
+    fontWeight: 'bold',
+  },
 
-    iconStyle: {
-        height: 20, width: 20
-    }
+  iconStyle: {
+    height: 22,
+    width: 20,
+  },
 });

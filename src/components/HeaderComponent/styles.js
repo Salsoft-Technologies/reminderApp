@@ -17,6 +17,6 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 4 * vw,
-    paddingTop: 2 * vh,
+    paddingTop: 4 * vh,
   },
 });

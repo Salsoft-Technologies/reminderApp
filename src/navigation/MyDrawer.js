@@ -6,7 +6,7 @@ import {
   ScrollView,
   StyleSheet,
   Image,
-  Share
+  Share,
 } from 'react-native';
 import 'react-native-gesture-handler';
 import {createDrawerNavigator} from '@react-navigation/drawer';
@@ -18,7 +18,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import {AuthContext} from '../navigation/AuthProvider';
 
 function MyDrawer({navigation}) {
-  const {logout, user} =useContext(AuthContext);
+  const {logout, user} = useContext(AuthContext);
 
   const CustomDrawerComponent = (props) => (
     <SafeAreaView style={styles.mainDrawerView}>
@@ -32,10 +32,9 @@ function MyDrawer({navigation}) {
 
         <View style={styles.nameContainer}>
           <Text style={styles.nameStyle}>{user.email}</Text>
-          <Text style={styles.nameLocationStyle}>LA, USA</Text>
+          <Text style={styles.nameLocationStyle}>by Rappel</Text>
         </View>
 
-        
         <View style={styles.allDrawerItemsView}>
           <ScrollView>
             <TouchableOpacity style={styles.drawerItemStyleView}>
@@ -47,7 +46,9 @@ function MyDrawer({navigation}) {
                 />
               </View>
 
-              <TouchableOpacity onPress={() => logout()} style={styles.drawerTextView}>
+              <TouchableOpacity
+                onPress={() => logout()}
+                style={styles.drawerTextView}>
                 <Text style={styles.drawerTextStyle}>Logout</Text>
               </TouchableOpacity>
             </TouchableOpacity>
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
   },
 
   drawerView: {
-    paddingTop: 5 * vh,
+    paddingTop: 3 * vh,
   },
 
   imageStyle: {
@@ -89,13 +90,13 @@ const styles = StyleSheet.create({
 
   nameStyle: {
     color: 'white',
-    fontSize: 2.5 * vh,
+    fontSize: 2 * vh,
     fontWeight: 'bold',
   },
 
   nameLocationStyle: {
     color: 'lightgray',
-    fontSize: 2 * vh,
+    fontSize: 1.8 * vh,
   },
 
   drawerItemStyleView: {
@@ -103,11 +104,11 @@ const styles = StyleSheet.create({
     borderLeftWidth: 3,
     borderColor: '#7f2d44',
     paddingVertical: 2 * vh,
-    marginBottom: 2 * vh
+    marginBottom: 2 * vh,
   },
 
   allDrawerItemsView: {
-    paddingTop: 8 * vh,
+    paddingTop: 5 * vh,
   },
 
   drawerItemIconView: {
@@ -115,17 +116,19 @@ const styles = StyleSheet.create({
   },
 
   drawerIcon: {
-    height: 3.5 * vh,
+    height: 2.5 * vh,
     width: 10 * vw,
   },
 
   drawerTextView: {
-    justifyContent: 'center', paddingLeft: 1 * vh
+    justifyContent: 'center',
+    paddingLeft: 1 * vh,
   },
 
   drawerTextStyle: {
-    color: 'white', fontSize: 2.5 * vh
-  }
+    color: 'white',
+    fontSize: 2.2 * vh,
+  },
 });
 
 export default MyDrawer;

@@ -20,7 +20,7 @@ export default StyleSheet.create({
 
   avatarStyle: {
     alignSelf: 'center',
-    height: 30 * vh,
+    height: 28 * vh,
     position: 'relative',
     bottom: 7 * vh,
   },
@@ -52,11 +52,10 @@ export default StyleSheet.create({
 
   valueHeadingStyle: {
     color: '#a4a5a8',
-    fontSize: 1.8 * vh,
   },
 
   valueStyle: {
-    fontSize: 2.5 * vh,
+    fontSize: 2 * vh,
   },
 
   otherDetailsMainView: {
@@ -66,7 +65,7 @@ export default StyleSheet.create({
 
   inviteButton: {
     alignItems: 'flex-end',
-    paddingTop: 3 * vh
+    paddingTop: 3 * vh,
   },
 
   inviteText: {

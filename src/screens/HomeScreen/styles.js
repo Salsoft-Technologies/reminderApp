@@ -8,11 +8,11 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 4 * vw,
-    paddingTop: 3 * vh,
+    paddingTop: 2 * vh,
   },
 
   nameStyle: {
-    fontSize: 3.5 * vh,
+    fontSize: 3 * vh,
     letterSpacing: 0.1 * vw,
   },
 
@@ -41,7 +41,7 @@ export default StyleSheet.create({
   },
 
   todaysTaskStyle: {
-    fontSize: 2.5 * vh,
+    fontSize: 2 * vh,
     fontWeight: 'bold',
     letterSpacing: 0.2 * vw,
   },
@@ -55,16 +55,16 @@ export default StyleSheet.create({
   elementView: {
     padding: 0.5 * vh,
     paddingHorizontal: 2 * vw,
-    width: 80 * vw,
+    width: 100 * vw,
   },
 
   listElementStyle: {
     color: '#fff',
+    fontSize: 1.8 * vh,
   },
 
   timeStyle: {
     color: 'lightgray',
-    fontSize: 1.8 * vh,
     paddingTop: 0.5 * vh,
     fontWeight: 'bold',
   },
@@ -86,11 +86,11 @@ export default StyleSheet.create({
     position: 'absolute',
     bottom: 2 * vh,
     alignSelf: 'flex-end',
-    paddingRight: 2 * vw
+    paddingRight: 2 * vw,
   },
 
   buttonStyle: {
-    paddingVertical: 2.4 * vh,
+    paddingVertical: 2 * vh,
     paddingHorizontal: 4 * vw,
     borderRadius: 10 * vw,
   },
@@ -109,6 +109,7 @@ export default StyleSheet.create({
     backgroundColor: '#fdce84',
     borderRadius: 2 * vw,
     paddingHorizontal: 3 * vw,
+    paddingVertical: 2 * vh,
   },
 
   modalSubmitButton: {
@@ -136,5 +137,69 @@ export default StyleSheet.create({
 
   rowView: {
     width: 58 * vw,
+  },
+
+  //
+
+  notificationMainView: {
+    flexDirection: 'row',
+    backgroundColor: '#fff',
+    borderWidth: 1,
+    paddingHorizontal: 3 * vw,
+    borderRadius: 3 * vw,
+    padding: 2 * vh,
+    borderColor: 'transparent',
+  },
+
+  notificationHeadingView: {
+    justifyContent: 'center',
+    paddingLeft: 3 * vw,
+  },
+
+  notificationHeadingText: {
+    fontSize: 2 * vh,
+  },
+
+  notificationSubHeadingText: {
+    color: 'gray',
+    fontSize: 1.4 * vh,
+  },
+
+  notificationSubHeading: {
+    color: 'gray',
+  },
+
+  notificationIconStyle: {
+    height: 8 * vh,
+    width: 10 * vw,
+    marginLeft: 1 * vh,
+  },
+
+  listSubItemsView: {
+    paddingTop: 2 * vh,
+  },
+
+  listItemView: {
+    borderLeftWidth: 3,
+    borderColor: '#fb4444',
+    flexDirection: 'row',
+    width: 80 * vw,
+  },
+
+  checkIconStyle: {
+    height: 4 * vh,
+    width: 8 * vw,
+    borderColor: 'gray',
+    borderWidth: 0.3,
+    borderRadius: 2 * vw,
+  },
+
+  datePickerStyle: {
+    marginTop: 2 * vh,
+    color: 'black',
+    backgroundColor: '#fdce84',
+    borderRadius: 2 * vw,
+    paddingHorizontal: 3 * vw,
+    paddingVertical: 2 * vh,
   },
 });

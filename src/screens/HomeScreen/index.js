@@ -3,7 +3,8 @@ import {
   Text,
   View,
   StatusBar,
-  ScrollView,
+  Button,
+  Platform,
   TouchableOpacity,
   TextInput,
   Image,
@@ -11,16 +12,14 @@ import {
 } from 'react-native';
 import HeaderComponent from '../../components/HeaderComponent/index';
 import LinearGradient from 'react-native-linear-gradient';
-import {BoxShadow} from 'react-native-shadow';
 import styles from './styles';
 import Modal from 'react-native-modal';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import PushNotification from 'react-native-push-notification';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import {AuthContext} from '../../navigation/AuthProvider';
-import { LogBox } from 'react-native';
-
+import {LogBox} from 'react-native';
 LogBox.ignoreLogs(['Setting a timer']);
-import vw from '../../utils/units/vw';
-import vh from '../../utils/units/vh';
 
 import * as firebaseobj from 'firebase';
 import {db} from '../../../config';
@@ -32,7 +31,12 @@ function HomeScreen() {
   const {user} = useContext(AuthContext);
   const [task, setTask] = useState('An Empty Task');
   const [taskItems, setTaskItems] = useState([]);
+  const [checkingData, setCheckingData] = useState([]);
   const retrievedUser = user.uid;
+
+  const [date, setDate] = useState(new Date(1598051730000));
+  const [time, setTime] = useState();
+  const [mode, setMode] = useState('date');
 
   const gettingData = () => {
     const theDetails = firebaseobj.database().ref('Details');
@@ -45,6 +49,7 @@ function HomeScreen() {
           (obj) => obj[1].userId === retrievedUser,
         );
         setTaskItems(newArray);
+        setCheckingData(newArray);
 
         PushNotification.configure({
           onRegister: function (token) {
@@ -52,7 +57,7 @@ function HomeScreen() {
           },
           onNotification: function (notification) {
             console.log('NOTIFICATION:', notification);
-            // notification.finish(PushNotificationIOS.FetchResult.NoData);
+            notification.finish(PushNotificationIOS.FetchResult.NoData);
           },
           onAction: function (notification) {
             console.log('ACTION:', notification.action);
@@ -67,7 +72,7 @@ function HomeScreen() {
             sound: true,
           },
           popInitialNotification: true,
-          requestPermissions: true,
+          requestPermissions: Platform.OS === 'ios',
         });
       }
     });
@@ -76,7 +81,7 @@ function HomeScreen() {
   useEffect(() => {
     gettingData();
     {
-      taskItems
+      taskItems[0]
         ? PushNotification.localNotificationSchedule({
             title: 'Task Message',
             date: new Date(Date.now() + 3 * 1000),
@@ -88,27 +93,60 @@ function HomeScreen() {
             playSound: true,
             soundName: 'default',
           })
-        : null;
+        : console.log('No Items');
     }
   }, []);
 
+  const NotifyMe = () => {};
+
+  const onChange = (event, selectedDate, selectedTime) => {
+    const currentDate = selectedDate || date;
+    const currentTime =
+      selectedTime || currentDate.getHours() + ':' + currentDate.getMinutes();
+    setDate(currentDate);
+    setTime(currentTime);
+  };
+
   const handleTask = () => {
     setTaskItems([...taskItems, task]);
-    // setTask(null);
+    setTask(null);
     const Details = firebaseobj.database().ref('Details');
     Details.push({
       userId: user.uid,
       userEmail: user.email,
       taskDescription: task,
+      newDate: date,
       taskDate:
-      new Date().getFullYear() +
-        '-' +
-        (new Date().getMonth() + 1) +
-        '-' +
-        new Date().getDate(),
-      taskTime: new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date().getSeconds()
+        date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate(),
+      taskTime: time,
     });
     setModalVisible(!isModalVisible);
+  };
+
+  const myDatePicker = () => {
+    return (
+      <View>
+        <DateTimePicker
+          style={styles.datePickerStyle}
+          testID="dateTimePicker"
+          value={date}
+          mode={mode}
+          is24Hour={true}
+          onChange={onChange}
+          textColor="gray"
+        />
+
+        <DateTimePicker
+          style={styles.datePickerStyle}
+          testID="dateTimePicker"
+          value={date}
+          mode={'time'}
+          is24Hour={true}
+          onChange={onChange}
+          textColor="gray"
+        />
+      </View>
+    );
   };
 
   PushNotification.createChannel(
@@ -127,8 +165,6 @@ function HomeScreen() {
     console.log(channel_ids, 'channels'); // ['channel_id_1']
   });
 
- 
-  
   const username = user.email.split('@')[0];
   const updatedUserName = username.charAt(0).toUpperCase() + username.slice(1);
 
@@ -206,6 +242,7 @@ function HomeScreen() {
             style={styles.modalInputStyle}
             placeholder="Type your task"
             placeholderTextColor="gray"></TextInput>
+          {myDatePicker()}
           <TouchableOpacity
             style={styles.modalSubmitButton}
             onPress={handleTask}>
@@ -224,50 +261,45 @@ function HomeScreen() {
   };
 
   const _renderFirstItems = ({item}) => {
-    const shadowOpt = {
-      width: 69 * vw,
-      // height: 85,
-      height: 13 * vh,
-      color: '#fb3f56',
-      border: 0,
-      radius: 10,
-      opacity: 0.06,
-      x: 3,
-      y: 7,
-      style: {marginVertical: 2},
-    };
     return (
-      <BoxShadow setting={shadowOpt}>
-        <View
-          style={styles.elementView}>
-          <LinearGradient
-            colors={['#fb4444', '#fb4444', '#cc342c']}
-            style={styles.listElementView}>
-            <View style={styles.rowView}>
-            <Text style={styles.listElementStyle}>
-              {item[1].taskDescription}
-            </Text>
+      <View style={styles.elementView}>
+        <LinearGradient
+          colors={['#ffffff', '#ece9e6', '#ece9e6']}
+          style={styles.notificationMainView}>
+          <View style={styles.listItemView}>
+            <View style={styles.notificationBlueBar}></View>
+            <View style={styles.notificationHeadingView}>
+              <Text style={styles.notificationSubHeading}>
+                {item[1].taskDescription}
+              </Text>
 
-            <Text style={styles.timeStyle}>
-              Date - {item[1].taskDate}   Time - {item[1].taskTime}
-            </Text>
+              <View style={styles.listSubItemsView}>
+                <Text style={styles.notificationSubHeadingText}>Time:</Text>
+                <Text style={styles.notificationSubHeadingText}>
+                  {item[1].taskDate} {item[1].taskTime}
+                </Text>
+              </View>
             </View>
+          </View>
 
-            <TouchableOpacity onPress={() => deleteAd(item)}>
-            <Image resizeMode='center' source={require('../../assets/images/delete.png')}/>
+          <TouchableOpacity onPress={() => deleteAd(item)}>
+            <Image
+              resizeMode="center"
+              source={require('../../assets/images/check.png')}
+              style={styles.checkIconStyle}
+            />
           </TouchableOpacity>
-         
-          </LinearGradient>
-        </View>
-      </BoxShadow>
+        </LinearGradient>
+      </View>
     );
   };
 
   return (
     <>
       <HeaderComponent />
-      <StatusBar backgroundColor="brown" opacity= '0.9' />
+      <StatusBar backgroundColor="brown" opacity="0.9" />
       {renderHomeHeader()}
+
       {renderTaskListHeading()}
       {taskItems != '' ? (
         <FlatList
@@ -282,7 +314,6 @@ function HomeScreen() {
           <Text style={styles.noTasksTextStyle}>No tasks assigned</Text>
         </View>
       )}
-
       {renderButton()}
       {renderModalMessage()}
     </>

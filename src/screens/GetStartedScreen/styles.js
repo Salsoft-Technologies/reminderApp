@@ -10,39 +10,47 @@ export default StyleSheet.create({
   },
 
   headingTextView: {
-    paddingTop: 3 * vh
+    paddingTop: 3 * vh,
   },
 
   headingAlwaysText: {
-      color: 'white',
-      fontSize: 3.5 * vh,
-      letterSpacing: 3,
+    color: 'white',
+    fontSize: 3.5 * vh,
+    letterSpacing: 3,
   },
 
   signUpButton: {
     backgroundColor: '#fb4444',
     borderRadius: 10 * vw,
-    paddingVertical: 2.5 * vh, 
-    marginHorizontal: 8 * vw
+    paddingVertical: 2.5 * vh,
+    marginHorizontal: 8 * vw,
   },
 
   signUpButtonText: {
-    alignSelf: 'center', color: 'white'
+    alignSelf: 'center',
+    color: 'white',
   },
 
   signInButtonText: {
-    alignSelf: 'center', color: '#fb4444', fontWeight: 'bold'
+    alignSelf: 'center',
+    color: '#fb4444',
+    fontWeight: 'bold',
   },
 
   signInButton: {
     marginTop: 2 * vh,
     backgroundColor: '#ffffff',
     borderRadius: 10 * vw,
-    paddingVertical: 2.5 * vh, 
-    marginHorizontal: 8 * vw
+    paddingVertical: 2.5 * vh,
+    marginHorizontal: 8 * vw,
   },
 
   mainAccessButtonsView: {
-    paddingTop: 40 * vh
-  }
+    paddingTop: 40 * vh,
+  },
+
+  logoIconStyle: {
+    height: 7.5 * vh,
+    width: 15 * vw,
+  },
 });
