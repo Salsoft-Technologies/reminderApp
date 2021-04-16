@@ -16,11 +16,17 @@ export default StyleSheet.create({
     marginHorizontal: 3 * vw,
   },
 
+  avatarStyle: {
+    alignSelf: 'center',
+    height: 30 * vh,
+  },
+
   submitLoginView: {
     marginTop: 5 * vh,
     backgroundColor: '#fb4444',
     borderRadius: 4 * vw,
     paddingVertical: 2.5 * vh,
+    marginHorizontal: 5 * vw,
   },
 
   loginSubmitText: {

@@ -13,6 +13,12 @@ export default StyleSheet.create({
     width: 9 * vw,
   },
 
+  profileIcon: {
+    height: 5 * vh,
+    width: 6.5 * vw,
+    marginLeft: 68 * vw,
+  },
+
   mainHeaderView: {
     flexDirection: 'row',
     justifyContent: 'space-between',

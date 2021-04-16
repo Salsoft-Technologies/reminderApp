@@ -2,6 +2,7 @@ import React, {useState, useEffect, useContext} from 'react';
 import {Text, View, TextInput, TouchableOpacity, Image} from 'react-native';
 import UserAccessHeader from '../../components/UserAccessHeader/index';
 import Modal from 'react-native-modal';
+import LottieView from 'lottie-react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {AuthContext} from '../../navigation/AuthProvider';
 import styles from './styles';
@@ -37,8 +38,19 @@ function AddProfile({navigation}) {
         userNumber: phoneNumber,
       });
       setModalVisible(!isModalVisible);
-      navigation.navigate('StartScreen');
+      navigation.navigate('ProfileScreen');
     }
+  };
+
+  const renderAvatar = () => {
+    return (
+      <LottieView
+        style={styles.avatarStyle}
+        source={require('../../assets/animation/addProfile.json')}
+        autoPlay
+        loop
+      />
+    );
   };
 
   const renderTextFields = () => {
@@ -128,6 +140,7 @@ function AddProfile({navigation}) {
   return (
     <View style={styles.mainScreenView}>
       <UserAccessHeader title="Add Profile" />
+      {renderAvatar()}
       {renderTextFields()}
       {renderAlertMessage()}
     </View>
