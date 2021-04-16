@@ -81,22 +81,23 @@ function HomeScreen() {
 
   useEffect(() => {
     gettingData();
-    {
-      taskItems[0]
-        ? PushNotification.localNotificationSchedule({
-            title: 'Task Message',
-            date: new Date(Date.now() + 3 * 1000),
-            message: 'You have a task to complete',
-            repeatType: 'hour',
-            repeatTime: '1',
-            allowWhileIdle: false,
-            channelId: '4',
-            playSound: true,
-            soundName: 'default',
-          })
-        : console.log('No Items');
-    }
   }, []);
+
+  {
+    taskItems.map((item, index) =>
+      PushNotification.localNotificationSchedule({
+        title: 'Task Message',
+        date: new Date(item[1].newDate),
+        message: item[1].taskDescription,
+        repeatType: 'hour',
+        repeatTime: '1',
+        allowWhileIdle: false,
+        channelId: '4',
+        playSound: true,
+        soundName: 'default',
+      }),
+    );
+  }
 
   const onChange = (event, selectedDate, selectedTime) => {
     const currentDate = selectedDate || date;
@@ -114,7 +115,7 @@ function HomeScreen() {
       userId: user.uid,
       userEmail: user.email,
       taskDescription: task,
-      newDate: date,
+      newDate: date.getTime(),
       taskDate:
         date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate(),
       taskTime: time,
