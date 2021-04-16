@@ -3,6 +3,7 @@ import 'react-native-gesture-handler';
 import {createStackNavigator} from '@react-navigation/stack';
 import StartScreen from '../screens/StartScreen/index';
 import NotificationScreen from '../screens/NotificationScreen/index';
+import AddProfile from '../screens/AddProfile/index';
 import MyTab from './MyTab';
 
 function MyStack() {
@@ -13,6 +14,11 @@ function MyStack() {
         options={{headerShown: false}}
         name="StartScreen"
         component={StartScreen}
+      />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="AddProfile"
+        component={AddProfile}
       />
 
       <Stack.Screen
