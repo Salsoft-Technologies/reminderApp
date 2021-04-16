@@ -18,6 +18,18 @@ export default StyleSheet.create({
     opacity: 0.4,
   },
 
+  loginSubmitText: {
+    alignSelf: 'center',
+    color: 'white',
+  },
+
+  submitLoginView: {
+    backgroundColor: '#fb4444',
+    borderRadius: 4 * vw,
+    paddingVertical: 2.5 * vh,
+    marginHorizontal: 5 * vw,
+  },
+
   avatarStyle: {
     alignSelf: 'center',
     height: 28 * vh,
