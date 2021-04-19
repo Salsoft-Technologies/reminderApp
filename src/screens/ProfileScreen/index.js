@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Text, View, StatusBar, TextInput, TouchableOpacity} from 'react-native';
+import {Text, View, StatusBar, TextInput, TouchableOpacity, ScrollView} from 'react-native';
 import UserAccessHeader from '../../components/UserAccessHeader/index';
 import LottieView from 'lottie-react-native';
 import styles from './styles';
@@ -13,6 +13,9 @@ if (!firebaseobj.apps.length) {
 function ProfileScreen() {
   const {user} = useContext(AuthContext);
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [age, setAge] = useState('');
+  const [countryCode, setCountryCode] = useState('');
+  const [gender, setGender] = useState('');
   const [profileData, setProfileData] = useState([]);
   const username = user.email.split('@')[0];
   const updatedUserName = username.charAt(0).toUpperCase() + username.slice(1);
@@ -37,12 +40,19 @@ function ProfileScreen() {
     gettingData();
   }, []);
 
-  const submitHandler = (phoneNumber) => {
-    console.log(profileData[0][0]);
-    var adaNameRef = firebaseobj
-      .database()
-      .ref(`ProfileDetails/${profileData[0][0]}`);
-    adaNameRef.update({userNumber: phoneNumber});
+  const submitHandler = (phoneNumber, age, countryCode, gender) => {
+    if(phoneNumber === ''){
+      console.log(profileData[0][0]);
+
+      alert('No empty fields')
+    }else{
+      console.log(profileData[0][0]);
+      var adaNameRef = firebaseobj
+        .database()
+        .ref(`ProfileDetails/${profileData[0][0]}`);
+      adaNameRef.update({userNumber: phoneNumber, userGender: gender, userCode: countryCode, userAge: age});
+    }
+
   };
 
   const renderRotateView = () => {
@@ -97,7 +107,7 @@ function ProfileScreen() {
     return (
       <>
         {profileData.map((item, index) => (
-          <View style={styles.otherDetailsMainView}>
+          <ScrollView style={styles.otherDetailsMainView}>
             <View style={styles.otherDetailsStyleView}>
               <Text style={styles.valueHeadingStyle}>Username</Text>
               <Text style={styles.valueStyle}>{updatedUserName}</Text>
@@ -109,14 +119,50 @@ function ProfileScreen() {
             </View>
 
             <View style={styles.otherDetailsStyleView}>
-              <Text style={styles.valueHeadingStyle}>Phone Number</Text>
+              <Text style={styles.valueHeadingStyle}>Your phone number is: {item[1].userNumber}</Text>
               <TextInput
-                onChangeText={(text) => setPhoneNumber(text)}
-                value={phoneNumber}>
+                onChangeText={(text) => setPhoneNumber({text: item[1].userNumber})}
+                value={phoneNumber}
+                placeholder='Enter new number'
+                >
                 <Text style={styles.valueStyle}>{item[1].userNumber}</Text>
+
               </TextInput>
             </View>
-          </View>
+
+            <View style={styles.otherDetailsStyleView}>
+              <Text style={styles.valueHeadingStyle}>Your Gender is: {item[1].userGender}</Text>
+              <TextInput
+                onChangeText={(text) => setGender(text)}
+                value={gender}
+                placeholder='Change your Gender'
+                >
+              </TextInput>
+            </View>
+
+            <View style={styles.otherDetailsStyleView}>
+              <Text style={styles.valueHeadingStyle}>Your country code is: {item[1].userCode}</Text>
+              <TextInput
+                onChangeText={(text) => setCountryCode(text)}
+                value={countryCode}
+                placeholder='Change your country code'
+                >
+              </TextInput>
+            </View>
+
+            <View style={styles.otherDetailsStyleView}>
+              <Text style={styles.valueHeadingStyle}>Your age is: {item[1].userAge}</Text>
+              <TextInput
+                onChangeText={(text) => setAge(text)}
+                value={age}
+                placeholder='Edit your age'
+                keyboardType='number-pad'
+                >
+              </TextInput>
+            </View>
+
+          </ScrollView>
+          
         ))}
       </>
     );
@@ -125,7 +171,7 @@ function ProfileScreen() {
   const updateProfileButton = () => {
     return (
       <TouchableOpacity
-        onPress={() => submitHandler(phoneNumber)}
+        onPress={() => submitHandler(phoneNumber,age, countryCode, gender)}
         style={styles.submitLoginView}>
         <Text style={styles.loginSubmitText}>Edit Profile</Text>
       </TouchableOpacity>
@@ -141,6 +187,9 @@ function ProfileScreen() {
       {renderDetails()}
       {renderOtherDetailsHeading()}
       {updateProfileButton()}
+
+
+      
     </View>
   );
 }

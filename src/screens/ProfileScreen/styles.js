@@ -72,7 +72,7 @@ export default StyleSheet.create({
 
   otherDetailsMainView: {
     bottom: 12 * vh,
-    height: 20 * vh,
+    height: 40 * vh,
   },
 
   inviteButton: {
