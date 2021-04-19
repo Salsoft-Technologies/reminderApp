@@ -126,25 +126,33 @@ function HomeScreen() {
   const myDatePicker = () => {
     return (
       <View>
-        <DateTimePicker
-          style={styles.datePickerStyle}
-          testID="dateTimePicker"
-          value={date}
-          mode={mode}
-          is24Hour={true}
-          onChange={onChange}
-          textColor="gray"
-        />
+        <LinearGradient
+          colors={['#ffffff', '#ece9e6', '#ece9e6']}
+          style={styles.datePickerStyle}>
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={date}
+            mode={mode}
+            is24Hour={true}
+            onChange={onChange}
+            textColor="black"
+            minimumDate={new Date()}
+          />
+        </LinearGradient>
 
-        <DateTimePicker
-          style={styles.datePickerStyle}
-          testID="dateTimePicker"
-          value={date}
-          mode={'time'}
-          is24Hour={true}
-          onChange={onChange}
-          textColor="gray"
-        />
+        <LinearGradient
+          colors={['#ffffff', '#ece9e6', '#ece9e6']}
+          style={styles.datePickerStyle}>
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={date}
+            mode={'time'}
+            is24Hour={true}
+            onChange={onChange}
+            textColor="black"
+            minimumDate={new Date()}
+          />
+        </LinearGradient>
       </View>
     );
   };
@@ -237,11 +245,14 @@ function HomeScreen() {
         onBackdropPress={toggleModal}
         backdropColor="black">
         <View style={styles.modalViewStyle}>
-          <TextInput
-            onChangeText={(text) => setTask(text)}
-            style={styles.modalInputStyle}
-            placeholder="Type your task"
-            placeholderTextColor="gray"></TextInput>
+          <LinearGradient
+            colors={['#ffffff', '#ece9e6', '#ece9e6']}
+            style={styles.modalInputStyle}>
+            <TextInput
+              onChangeText={(text) => setTask(text)}
+              placeholder="Type your task"
+              placeholderTextColor="gray"></TextInput>
+          </LinearGradient>
           {myDatePicker()}
           <TouchableOpacity
             style={styles.modalSubmitButton}

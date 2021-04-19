@@ -90,9 +90,8 @@ export default StyleSheet.create({
   },
 
   buttonStyle: {
-    paddingVertical: 3 * vh,
-    paddingHorizontal: 5 * vw,
-    borderRadius: 10 * vw,
+    padding: 4 * vw,
+    borderRadius: 8 * vw,
   },
 
   modalViewStyle: {
@@ -197,7 +196,6 @@ export default StyleSheet.create({
   datePickerStyle: {
     marginTop: 2 * vh,
     color: 'black',
-    backgroundColor: '#fdce84',
     borderRadius: 2 * vw,
     paddingHorizontal: 3 * vw,
     paddingVertical: 2 * vh,
