@@ -89,8 +89,8 @@ function HomeScreen() {
         title: 'Task Message',
         date: new Date(item[1].newDate),
         message: item[1].taskDescription,
-        repeatType: 'hour',
-        repeatTime: '1',
+        repeatType: 'day',
+        repeatTime: new Date(item[1].newDate + 1),
         allowWhileIdle: false,
         channelId: '4',
         playSound: true,
@@ -137,7 +137,6 @@ function HomeScreen() {
             onChange={onChange}
             textColor="black"
             minimumDate={new Date()}
-            autoSize={true}
           />
           <TouchableOpacity
             style={styles.modalSubmitButton}
@@ -145,20 +144,6 @@ function HomeScreen() {
             <Text style={styles.modalSubmitTextStyle}>Done</Text>
           </TouchableOpacity>
         </LinearGradient>
-
-        {/* <LinearGradient
-          colors={['#ffffff', '#ece9e6', '#ece9e6']}
-          style={styles.datePickerStyle}>
-          <DateTimePicker
-            testID="dateTimePicker"
-            value={date}
-            mode={'time'}
-            is24Hour={true}
-            onChange={onChange}
-            textColor="black"
-            minimumDate={new Date()}
-          />
-        </LinearGradient> */}
       </View>
     );
   };
@@ -265,7 +250,9 @@ function HomeScreen() {
               placeholderTextColor="gray"></TextInput>
           </LinearGradient>
 
-          <LinearGradient colors={['#ffffff', '#ece9e6', '#ece9e6']}>
+          <LinearGradient
+            colors={['#ffffff', '#ece9e6', '#ece9e6']}
+            style={styles.pickDateMainView}>
             <TouchableOpacity
               style={styles.calendarButton}
               onPress={toggleDateModal}>
@@ -308,6 +295,18 @@ function HomeScreen() {
   };
 
   const _renderFirstItems = ({item}) => {
+    console.log(item[1].taskDate);
+    const currentDate = new Date().getTime();
+    const theDate =
+      new Date().getFullYear() +
+      '-' +
+      (new Date().getMonth() + 1) +
+      '-' +
+      new Date().getDate();
+    console.log(theDate, 'thedate');
+    // const dateFormat = require('dateformat');
+    // dateFormat(now, 'yyyy, mmmm, dddd, yyyy');
+
     return (
       <View style={styles.elementView}>
         <LinearGradient
@@ -324,6 +323,12 @@ function HomeScreen() {
                 <Text style={styles.notificationSubHeadingText}>Time:</Text>
                 <Text style={styles.notificationSubHeadingText}>
                   {item[1].taskDate} {item[1].taskTime}
+                </Text>
+
+                <Text style={styles.notificationSubHeadingText}>
+                  {item[1].taskDate < theDate
+                    ? 'You have missed the date of this task'
+                    : null}
                 </Text>
               </View>
             </View>

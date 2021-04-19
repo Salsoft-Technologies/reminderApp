@@ -12,23 +12,21 @@ export default StyleSheet.create({
   },
 
   calendarButtonIcon: {
-    height: 10 * vh,
-    width: 10 * vw,
+    height: 8 * vh,
+    width: 6 * vw,
   },
 
-  deletedButton: {
-    borderColor: 'gray',
-    borderWidth: 0.3,
-    borderRadius: 1 * vw,
-    paddingVertical: 2 * vh,
-    marginVertical: 2 * vh,
-  },
+  deletedButton: {},
 
   calendarButton: {
     flexDirection: 'row-reverse',
     justifyContent: 'space-between',
     paddingLeft: 3 * vw,
     paddingRight: 3 * vw,
+  },
+
+  pickDateMainView: {
+    borderRadius: 3 * vw,
   },
 
   calendarButtonView: {},
@@ -216,11 +214,11 @@ export default StyleSheet.create({
   },
 
   checkIconStyle: {
-    height: 2 * vh,
+    height: 3 * vh,
     width: 10 * vw,
-    // borderColor: 'gray',
-    // borderWidth: 0.3,
-    // borderRadius: 1 * vw,
+    borderColor: 'gray',
+    borderWidth: 0.3,
+    borderRadius: 1 * vw,
   },
 
   datePickerStyle: {
