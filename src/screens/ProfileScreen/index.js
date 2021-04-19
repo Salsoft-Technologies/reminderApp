@@ -50,7 +50,7 @@ function ProfileScreen() {
   }, []);
 
   const submitHandler = (phoneNumber, age, countryCode, gender) => {
-    console.log(profileData[0][0]);
+    setProfileData([...profileData]);
     var adaNameRef = firebaseobj
       .database()
       .ref(`ProfileDetails/${profileData[0][0]}`);

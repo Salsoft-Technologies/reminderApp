@@ -187,11 +187,11 @@ export default StyleSheet.create({
   },
 
   checkIconStyle: {
-    height: 3 * vh,
-    width: 10 * vw,
+    height: 2 * vh,
+    width: 6 * vw,
     borderColor: 'gray',
     borderWidth: 0.3,
-    borderRadius: 2 * vw,
+    borderRadius: 1 * vw,
   },
 
   datePickerStyle: {

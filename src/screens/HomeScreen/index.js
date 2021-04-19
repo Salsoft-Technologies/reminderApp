@@ -330,8 +330,7 @@ function HomeScreen() {
           <Text style={styles.noTasksTextStyle}>No tasks assigned</Text>
         </View>
       )}
-      {/* {renderButton()} */}
-      {newButton()}
+      {Platform.OS === 'android' ? renderButton() : newButton()}
 
       {renderModalMessage()}
     </>
