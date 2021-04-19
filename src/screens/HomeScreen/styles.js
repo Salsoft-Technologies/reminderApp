@@ -90,8 +90,8 @@ export default StyleSheet.create({
   },
 
   buttonStyle: {
-    paddingVertical: 2 * vh,
-    paddingHorizontal: 4 * vw,
+    paddingVertical: 3 * vh,
+    paddingHorizontal: 5 * vw,
     borderRadius: 10 * vw,
   },
 

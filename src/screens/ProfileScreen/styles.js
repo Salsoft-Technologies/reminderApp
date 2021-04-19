@@ -5,7 +5,6 @@ import vh from '../../utils/units/vh';
 export default StyleSheet.create({
   mainScreenView: {
     flex: 1,
-    backgroundColor: 'black',
     padding: 2 * vh,
   },
 
@@ -15,7 +14,7 @@ export default StyleSheet.create({
     paddingHorizontal: 35 * vh,
     marginTop: 8 * vh,
     transform: [{rotate: '340deg'}],
-    opacity: 0.4,
+    opacity: 0.8,
   },
 
   profileDisclaimerView: {
@@ -61,13 +60,11 @@ export default StyleSheet.create({
   },
 
   detailsStyleText: {
-    color: '#fff',
     alignSelf: 'center',
     paddingTop: 0.5 * vh,
   },
 
   otherDetailsStyleView: {
-    backgroundColor: '#fdce84',
     paddingHorizontal: 5 * vw,
     paddingVertical: 1 * vh,
     borderRadius: 1 * vh,

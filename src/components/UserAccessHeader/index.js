@@ -8,16 +8,27 @@ function UserAccessHeader(props) {
 
   return (
     <View style={styles.headerView}>
-      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerIconView}>
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={styles.headerIconView}>
         <Image
-        resizeMode='contain'
+          resizeMode="contain"
           style={styles.iconStyle}
-          source={require('../../assets/images/back.png')}
+          source={
+            props.customIcon
+              ? props.customIcon
+              : require('../../assets/images/back.png')
+          }
         />
       </TouchableOpacity>
 
       <View style={styles.loginHeaderTextView}>
-        <Text style={styles.loginHeaderTextStyle}>{props.title}</Text>
+        <Text
+          style={
+            props.customStyle ? props.customStyle : styles.loginHeaderTextStyle
+          }>
+          {props.title}
+        </Text>
       </View>
     </View>
   );

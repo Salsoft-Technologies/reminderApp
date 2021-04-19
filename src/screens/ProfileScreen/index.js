@@ -10,6 +10,7 @@ import {
 import UserAccessHeader from '../../components/UserAccessHeader/index';
 import LottieView from 'lottie-react-native';
 import styles from './styles';
+import LinearGradient from 'react-native-linear-gradient';
 import {AuthContext} from '../../navigation/AuthProvider';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
@@ -115,59 +116,87 @@ function ProfileScreen() {
       <>
         {profileData.map((item, index) => (
           <View style={styles.otherDetailsMainView}>
-            <View style={styles.otherDetailsStyleView}>
-              <Text style={styles.valueHeadingStyle}>Username</Text>
-              <Text style={styles.valueStyle}>{updatedUserName}</Text>
-            </View>
+            <LinearGradient
+              colors={['#ffffff', '#ece9e6', '#ece9e6']}
+              style={styles.otherDetailsStyleView}>
+              <View>
+                <Text style={styles.valueHeadingStyle}>
+                  Username (non-Editable)
+                </Text>
+                <Text style={styles.valueStyle}>{updatedUserName}</Text>
+              </View>
+            </LinearGradient>
 
-            <View style={styles.otherDetailsStyleView}>
-              <Text style={styles.valueHeadingStyle}>Email</Text>
-              <Text style={styles.valueStyle}>{user.email}</Text>
-            </View>
+            <LinearGradient
+              colors={['#ffffff', '#ece9e6', '#ece9e6']}
+              style={styles.otherDetailsStyleView}>
+              <View>
+                <Text style={styles.valueHeadingStyle}>
+                  Email (non-Editable)
+                </Text>
+                <Text style={styles.valueStyle}>{user.email}</Text>
+              </View>
+            </LinearGradient>
 
-            <View style={styles.otherDetailsStyleView}>
-              <Text style={styles.valueHeadingStyle}>
-                Your phone number is: {item[1].userNumber}
-              </Text>
-              <TextInput
-                onChangeText={(text) => setPhoneNumber(text)}
-                placeholder="Enter new number">
-                <Text style={styles.valueStyle}>{item[1].userNumber}</Text>
-              </TextInput>
-            </View>
+            <LinearGradient
+              colors={['#ffffff', '#ece9e6', '#ece9e6']}
+              style={styles.otherDetailsStyleView}>
+              <View>
+                <Text style={styles.valueHeadingStyle}>
+                  Your phone number is: {item[1].userNumber}
+                </Text>
+                <TextInput
+                  onChangeText={(text) => setPhoneNumber(text)}
+                  placeholder="Enter new number">
+                  <Text style={styles.valueStyle}>{item[1].userNumber}</Text>
+                </TextInput>
+              </View>
+            </LinearGradient>
 
-            <View style={styles.otherDetailsStyleView}>
-              <Text style={styles.valueHeadingStyle}>
-                Your Gender is: {item[1].userGender}
-              </Text>
-              <TextInput
-                onChangeText={(text) => setGender(text)}
-                placeholder="Change your Gender">
-                <Text style={styles.valueStyle}>{item[1].userGender}</Text>
-              </TextInput>
-            </View>
+            <LinearGradient
+              colors={['#ffffff', '#ece9e6', '#ece9e6']}
+              style={styles.otherDetailsStyleView}>
+              <View>
+                <Text style={styles.valueHeadingStyle}>
+                  Your Gender is: {item[1].userGender}
+                </Text>
+                <TextInput
+                  onChangeText={(text) => setGender(text)}
+                  placeholder="Change your Gender">
+                  <Text style={styles.valueStyle}>{item[1].userGender}</Text>
+                </TextInput>
+              </View>
+            </LinearGradient>
 
-            <View style={styles.otherDetailsStyleView}>
-              <Text style={styles.valueHeadingStyle}>
-                Your country code is: {item[1].userCode}
-              </Text>
-              <TextInput
-                onChangeText={(text) => setCountryCode(text)}
-                placeholder="Change your country code">
-                <Text style={styles.valueStyle}>{item[1].userCode}</Text>
-              </TextInput>
-            </View>
+            <LinearGradient
+              colors={['#ffffff', '#ece9e6', '#ece9e6']}
+              style={styles.otherDetailsStyleView}>
+              <View>
+                <Text style={styles.valueHeadingStyle}>
+                  Your country code is: {item[1].userCode}
+                </Text>
+                <TextInput
+                  onChangeText={(text) => setCountryCode(text)}
+                  placeholder="Change your country code">
+                  <Text style={styles.valueStyle}>{item[1].userCode}</Text>
+                </TextInput>
+              </View>
+            </LinearGradient>
 
-            <View style={styles.otherDetailsStyleView}>
-              <Text style={styles.valueHeadingStyle}>
-                Your age is: {item[1].userAge}
-              </Text>
-              <TextInput
-                onChangeText={(text) => setAge(text)}
-                placeholder="Edit your age">
-                <Text style={styles.valueStyle}>{item[1].userAge}</Text>
-              </TextInput>
-            </View>
+            <LinearGradient
+              colors={['#ffffff', '#ece9e6', '#ece9e6']}
+              style={styles.otherDetailsStyleView}>
+              <View>
+                <Text style={styles.valueHeadingStyle}>
+                  Your age is: {item[1].userAge}
+                </Text>
+                <TextInput
+                  onChangeText={(text) => setAge(text)}
+                  placeholder="Edit your age">
+                  <Text style={styles.valueStyle}>{item[1].userAge}</Text>
+                </TextInput>
+              </View>
+            </LinearGradient>
           </View>
         ))}
       </>
@@ -187,7 +216,11 @@ function ProfileScreen() {
   return (
     <KeyboardAwareScrollView bounces={false} style={styles.mainScreenView}>
       <StatusBar backgroundColor="brown" opacity="0.8" />
-      <UserAccessHeader title="Profile Details" />
+      <UserAccessHeader
+        customIcon={require('../../assets/images/blackBack.png')}
+        customStyle={{color: 'black'}}
+        title="Profile Details"
+      />
       {profileData.length <= 0 ? (
         <View style={styles.profileDisclaimerView}>
           <Text style={styles.profileDisclaimer}>

@@ -5,7 +5,6 @@ import vh from '../../utils/units/vh';
 export default StyleSheet.create({
   mainScreen: {
     flex: 1,
-    backgroundColor: 'black',
     padding: 2 * vh,
   },
 

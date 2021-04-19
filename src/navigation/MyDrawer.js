@@ -13,6 +13,8 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import MyStack from '../navigation/MyStack';
 import LottieView from 'lottie-react-native';
 import vw from '../utils/units/vw';
+import LinearGradient from 'react-native-linear-gradient';
+
 import vh from '../utils/units/vh';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {AuthContext} from '../navigation/AuthProvider';
@@ -21,7 +23,7 @@ function MyDrawer({navigation}) {
   const {logout, user} = useContext(AuthContext);
 
   const CustomDrawerComponent = (props) => (
-    <SafeAreaView style={styles.mainDrawerView}>
+    <LinearGradient colors={['#ffffff', '#ece9e6', '#ece9e6']}>
       <View style={styles.drawerView}>
         <LottieView
           style={styles.imageStyle}
@@ -52,11 +54,12 @@ function MyDrawer({navigation}) {
                 <Text style={styles.drawerTextStyle}>Logout</Text>
               </TouchableOpacity>
             </TouchableOpacity>
+
             {/* <DrawerItems {...props}/> */}
           </ScrollView>
         </View>
       </View>
-    </SafeAreaView>
+    </LinearGradient>
   );
   const Drawer = createDrawerNavigator();
 
@@ -89,13 +92,12 @@ const styles = StyleSheet.create({
   },
 
   nameStyle: {
-    color: 'white',
     fontSize: 2 * vh,
     fontWeight: 'bold',
   },
 
   nameLocationStyle: {
-    color: 'lightgray',
+    color: 'darkgray',
     fontSize: 1.8 * vh,
   },
 
@@ -126,7 +128,6 @@ const styles = StyleSheet.create({
   },
 
   drawerTextStyle: {
-    color: 'white',
     fontSize: 2.2 * vh,
   },
 });
