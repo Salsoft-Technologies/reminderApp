@@ -1,9 +1,18 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Text, View, StatusBar, TextInput, TouchableOpacity, ScrollView} from 'react-native';
+import {
+  Text,
+  View,
+  StatusBar,
+  TextInput,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import UserAccessHeader from '../../components/UserAccessHeader/index';
 import LottieView from 'lottie-react-native';
 import styles from './styles';
 import {AuthContext} from '../../navigation/AuthProvider';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+
 import * as firebaseobj from 'firebase';
 import {db} from '../../../config';
 if (!firebaseobj.apps.length) {
@@ -41,18 +50,16 @@ function ProfileScreen() {
   }, []);
 
   const submitHandler = (phoneNumber, age, countryCode, gender) => {
-    if(phoneNumber === ''){
-      console.log(profileData[0][0]);
-
-      alert('No empty fields')
-    }else{
-      console.log(profileData[0][0]);
-      var adaNameRef = firebaseobj
-        .database()
-        .ref(`ProfileDetails/${profileData[0][0]}`);
-      adaNameRef.update({userNumber: phoneNumber, userGender: gender, userCode: countryCode, userAge: age});
-    }
-
+    console.log(profileData[0][0]);
+    var adaNameRef = firebaseobj
+      .database()
+      .ref(`ProfileDetails/${profileData[0][0]}`);
+    adaNameRef.update({
+      userNumber: phoneNumber,
+      userGender: gender,
+      userCode: countryCode,
+      userAge: age,
+    });
   };
 
   const renderRotateView = () => {
@@ -107,7 +114,7 @@ function ProfileScreen() {
     return (
       <>
         {profileData.map((item, index) => (
-          <ScrollView style={styles.otherDetailsMainView}>
+          <KeyboardAwareScrollView style={styles.otherDetailsMainView}>
             <View style={styles.otherDetailsStyleView}>
               <Text style={styles.valueHeadingStyle}>Username</Text>
               <Text style={styles.valueStyle}>{updatedUserName}</Text>
@@ -119,50 +126,49 @@ function ProfileScreen() {
             </View>
 
             <View style={styles.otherDetailsStyleView}>
-              <Text style={styles.valueHeadingStyle}>Your phone number is: {item[1].userNumber}</Text>
+              <Text style={styles.valueHeadingStyle}>
+                Your phone number is: {item[1].userNumber}
+              </Text>
               <TextInput
-                onChangeText={(text) => setPhoneNumber({text: item[1].userNumber})}
-                value={phoneNumber}
-                placeholder='Enter new number'
-                >
+                onChangeText={(text) => setPhoneNumber(text)}
+                placeholder="Enter new number">
                 <Text style={styles.valueStyle}>{item[1].userNumber}</Text>
-
               </TextInput>
             </View>
 
             <View style={styles.otherDetailsStyleView}>
-              <Text style={styles.valueHeadingStyle}>Your Gender is: {item[1].userGender}</Text>
+              <Text style={styles.valueHeadingStyle}>
+                Your Gender is: {item[1].userGender}
+              </Text>
               <TextInput
                 onChangeText={(text) => setGender(text)}
-                value={gender}
-                placeholder='Change your Gender'
-                >
+                placeholder="Change your Gender">
+                <Text style={styles.valueStyle}>{item[1].userGender}</Text>
               </TextInput>
             </View>
 
             <View style={styles.otherDetailsStyleView}>
-              <Text style={styles.valueHeadingStyle}>Your country code is: {item[1].userCode}</Text>
+              <Text style={styles.valueHeadingStyle}>
+                Your country code is: {item[1].userCode}
+              </Text>
               <TextInput
                 onChangeText={(text) => setCountryCode(text)}
-                value={countryCode}
-                placeholder='Change your country code'
-                >
+                placeholder="Change your country code">
+                <Text style={styles.valueStyle}>{item[1].userCode}</Text>
               </TextInput>
             </View>
 
             <View style={styles.otherDetailsStyleView}>
-              <Text style={styles.valueHeadingStyle}>Your age is: {item[1].userAge}</Text>
+              <Text style={styles.valueHeadingStyle}>
+                Your age is: {item[1].userAge}
+              </Text>
               <TextInput
                 onChangeText={(text) => setAge(text)}
-                value={age}
-                placeholder='Edit your age'
-                keyboardType='number-pad'
-                >
+                placeholder="Edit your age">
+                <Text style={styles.valueStyle}>{item[1].userAge}</Text>
               </TextInput>
             </View>
-
-          </ScrollView>
-          
+          </KeyboardAwareScrollView>
         ))}
       </>
     );
@@ -171,25 +177,33 @@ function ProfileScreen() {
   const updateProfileButton = () => {
     return (
       <TouchableOpacity
-        onPress={() => submitHandler(phoneNumber,age, countryCode, gender)}
+        onPress={() => submitHandler(phoneNumber, age, countryCode, gender)}
         style={styles.submitLoginView}>
         <Text style={styles.loginSubmitText}>Edit Profile</Text>
       </TouchableOpacity>
     );
   };
 
+  console.log(profileData);
   return (
     <View style={styles.mainScreenView}>
       <StatusBar backgroundColor="brown" opacity="0.8" />
       <UserAccessHeader title="Profile Details" />
-      {renderRotateView()}
-      {renderAvatar()}
-      {renderDetails()}
-      {renderOtherDetailsHeading()}
-      {updateProfileButton()}
-
-
-      
+      {profileData.length <= 0 ? (
+        <View style={styles.profileDisclaimerView}>
+          <Text style={styles.profileDisclaimer}>
+            Please add a profile first
+          </Text>
+        </View>
+      ) : (
+        <>
+          {renderRotateView()}
+          {renderAvatar()}
+          {renderDetails()}
+          {renderOtherDetailsHeading()}
+          {updateProfileButton()}
+        </>
+      )}
     </View>
   );
 }

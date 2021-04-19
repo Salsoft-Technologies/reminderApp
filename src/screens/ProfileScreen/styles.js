@@ -18,6 +18,17 @@ export default StyleSheet.create({
     opacity: 0.4,
   },
 
+  profileDisclaimerView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  profileDisclaimer: {
+    color: '#fff',
+    fontSize: 2 * vh,
+  },
+
   loginSubmitText: {
     alignSelf: 'center',
     color: 'white',
