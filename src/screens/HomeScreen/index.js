@@ -132,15 +132,21 @@ function HomeScreen() {
           <DateTimePicker
             testID="dateTimePicker"
             value={date}
-            mode={mode}
+            mode={'datetime'}
             is24Hour={true}
             onChange={onChange}
             textColor="black"
             minimumDate={new Date()}
+            autoSize={true}
           />
+          <TouchableOpacity
+            style={styles.modalSubmitButton}
+            onPress={toggleDateModal}>
+            <Text style={styles.modalSubmitTextStyle}>Done</Text>
+          </TouchableOpacity>
         </LinearGradient>
 
-        <LinearGradient
+        {/* <LinearGradient
           colors={['#ffffff', '#ece9e6', '#ece9e6']}
           style={styles.datePickerStyle}>
           <DateTimePicker
@@ -152,7 +158,7 @@ function HomeScreen() {
             textColor="black"
             minimumDate={new Date()}
           />
-        </LinearGradient>
+        </LinearGradient> */}
       </View>
     );
   };
@@ -179,6 +185,11 @@ function HomeScreen() {
   const [isModalVisible, setModalVisible] = useState(false);
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
+  };
+
+  const [isDateModalVisible, setDateModalVisible] = useState(false);
+  const toggleDateModal = () => {
+    setDateModalVisible(!isDateModalVisible);
   };
 
   const renderHomeHeader = () => {
@@ -253,7 +264,32 @@ function HomeScreen() {
               placeholder="Type your task"
               placeholderTextColor="gray"></TextInput>
           </LinearGradient>
-          {myDatePicker()}
+
+          <LinearGradient colors={['#ffffff', '#ece9e6', '#ece9e6']}>
+            <TouchableOpacity
+              style={styles.calendarButton}
+              onPress={toggleDateModal}>
+              <View style={styles.calendarButtonView}>
+                <Image
+                  resizeMode="contain"
+                  style={styles.calendarButtonIcon}
+                  source={require('../../assets/images/calendar.png')}
+                />
+              </View>
+
+              <View style={styles.pickDateTextView}>
+                <Text style={styles.pickDateText}>Pick date and time</Text>
+              </View>
+            </TouchableOpacity>
+          </LinearGradient>
+
+          <Modal
+            isVisible={isDateModalVisible}
+            onBackdropPress={toggleDateModal}
+            backdropColor="black">
+            {myDatePicker()}
+          </Modal>
+
           <TouchableOpacity
             style={styles.modalSubmitButton}
             onPress={handleTask}>
@@ -293,7 +329,9 @@ function HomeScreen() {
             </View>
           </View>
 
-          <TouchableOpacity onPress={() => deleteAd(item)}>
+          <TouchableOpacity
+            style={styles.deletedButton}
+            onPress={() => deleteAd(item)}>
             <Image
               resizeMode="contain"
               source={require('../../assets/images/check.png')}
