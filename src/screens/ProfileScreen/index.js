@@ -114,7 +114,7 @@ function ProfileScreen() {
     return (
       <>
         {profileData.map((item, index) => (
-          <KeyboardAwareScrollView style={styles.otherDetailsMainView}>
+          <View style={styles.otherDetailsMainView}>
             <View style={styles.otherDetailsStyleView}>
               <Text style={styles.valueHeadingStyle}>Username</Text>
               <Text style={styles.valueStyle}>{updatedUserName}</Text>
@@ -168,7 +168,7 @@ function ProfileScreen() {
                 <Text style={styles.valueStyle}>{item[1].userAge}</Text>
               </TextInput>
             </View>
-          </KeyboardAwareScrollView>
+          </View>
         ))}
       </>
     );
@@ -184,9 +184,8 @@ function ProfileScreen() {
     );
   };
 
-  console.log(profileData);
   return (
-    <View style={styles.mainScreenView}>
+    <KeyboardAwareScrollView bounces={false} style={styles.mainScreenView}>
       <StatusBar backgroundColor="brown" opacity="0.8" />
       <UserAccessHeader title="Profile Details" />
       {profileData.length <= 0 ? (
@@ -204,7 +203,7 @@ function ProfileScreen() {
           {updateProfileButton()}
         </>
       )}
-    </View>
+    </KeyboardAwareScrollView>
   );
 }
 

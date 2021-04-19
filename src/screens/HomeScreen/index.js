@@ -284,7 +284,7 @@ function HomeScreen() {
 
           <TouchableOpacity onPress={() => deleteAd(item)}>
             <Image
-              resizeMode="center"
+              resizeMode="contain"
               source={require('../../assets/images/check.png')}
               style={styles.checkIconStyle}
             />

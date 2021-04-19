@@ -187,8 +187,8 @@ export default StyleSheet.create({
   },
 
   checkIconStyle: {
-    height: 4 * vh,
-    width: 8 * vw,
+    height: 3 * vh,
+    width: 10 * vw,
     borderColor: 'gray',
     borderWidth: 0.3,
     borderRadius: 2 * vw,

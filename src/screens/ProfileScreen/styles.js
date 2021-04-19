@@ -39,6 +39,7 @@ export default StyleSheet.create({
     borderRadius: 4 * vw,
     paddingVertical: 2.5 * vh,
     marginHorizontal: 5 * vw,
+    bottom: 3 * vh,
   },
 
   avatarStyle: {
